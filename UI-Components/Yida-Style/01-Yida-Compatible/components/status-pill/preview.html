@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>StatusPill 预览</title>
+<style>
+  body { margin: 0; padding: 32px; background: #f5f7fa;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; }
+  .cap { font-size: 12px; color: rgba(0,0,0,0.45); margin: 18px 0 8px; }
+  .row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+  /* ==== component ==== */
+  .status-pill { display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px;
+    border: 1px solid #f0f0f0; border-radius: 13px; background: #fff; }
+  .status-pill .sp-dot { width: 8px; height: 8px; border-radius: 50%; flex: 0 0 auto; }
+  .status-pill .sp-num { font-weight: 600; color: rgba(0,0,0,0.88); font-variant-numeric: tabular-nums; }
+  .status-pill .sp-lab { font-size: 12px; color: rgba(0,0,0,0.45); }
+  .status-pill.interactive { cursor: pointer; flex: 0 0 auto; }
+  .status-pill.interactive:hover { background: #f5f7fa; }
+  .status-pill.interactive.on { background: #e6f4ff; border-color: #1677ff; }
+</style>
+</head>
+<body>
+  <p class="cap">一组状态计数（语义色示例，实际由宿主传入）</p>
+  <div class="row">
+    <span class="status-pill"><i class="sp-dot" style="background:#B0BEC5"></i><b class="sp-num">5</b><span class="sp-lab">待定</span></span>
+    <span class="status-pill"><i class="sp-dot" style="background:#19C355"></i><b class="sp-num">40</b><span class="sp-lab">通过</span></span>
+    <span class="status-pill"><i class="sp-dot" style="background:#FFB300"></i><b class="sp-num">3</b><span class="sp-lab">带条件</span></span>
+    <span class="status-pill"><i class="sp-dot" style="background:#F44336"></i><b class="sp-num">2</b><span class="sp-lab">不通过</span></span>
+    <span class="status-pill"><i class="sp-dot" style="background:#9E9E9E"></i><b class="sp-num">0</b><span class="sp-lab">不适用</span></span>
+  </div>
+
+  <p class="cap">交互变体（点击筛选）：hover / 选中态 on</p>
+  <div class="row">
+    <span class="status-pill interactive on"><i class="sp-dot" style="background:#19C355"></i><b class="sp-num">40</b><span class="sp-lab">通过</span></span>
+    <span class="status-pill interactive"><i class="sp-dot" style="background:#F44336"></i><b class="sp-num">2</b><span class="sp-lab">不通过</span></span>
+  </div>
+</body>
+</html>
