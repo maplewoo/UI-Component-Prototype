@@ -2,12 +2,13 @@
 // 受控分段切换 + 可选锁定。锁定判定与提示由宿主经 lockPredicate/onLockClick 注入。
 
 var segStyles = `
-  .seg-pill{position:relative;display:flex;padding:4px;background:#eef0f3;border-radius:10px;box-sizing:border-box;}
-  .seg-thumb{position:absolute;top:4px;left:4px;bottom:4px;background:var(--sc,#1677ff);border-radius:6px;box-shadow:0 1px 3px rgba(16,24,40,0.15);transition:transform .28s cubic-bezier(.4,0,.2,1);z-index:0;}
-  .seg-item{position:relative;z-index:1;flex:1 1 50%;text-align:center;border:0;background:transparent;cursor:pointer;font-size:16px;font-weight:600;color:rgba(0,0,0,0.88);padding:8px 12px;border-radius:6px;transition:color .28s ease;white-space:nowrap;font-family:inherit;}
+  .seg-pill{position:relative;display:flex;padding:4px;background:var(--track,#eef0f3);border-radius:10px;box-sizing:border-box;}
+  .seg-thumb{position:absolute;top:4px;left:4px;bottom:4px;background:var(--sc,var(--brand,#1677ff));border-radius:var(--r-ctrl,6px);box-shadow:0 1px 3px rgba(16,24,40,0.15);transition:transform .28s cubic-bezier(.4,0,.2,1);z-index:0;}
+  .seg-item{position:relative;z-index:1;flex:1 1 50%;text-align:center;border:0;background:transparent;cursor:pointer;font-size:var(--f-sub,16px);font-weight:var(--fw-strong,600);color:var(--t1,rgba(0,0,0,.88));padding:8px 12px;border-radius:var(--r-ctrl,6px);transition:color .28s ease;white-space:nowrap;font-family:inherit;}
   .seg-item.is-active{color:#fff;}
-  .seg-item.is-locked{color:rgba(0,0,0,0.25);cursor:not-allowed;}
-  .seg-pill :focus-visible{outline:2px solid var(--sc,#1677ff);outline-offset:2px;border-radius:4px;}
+  .seg-item.is-locked{color:var(--t4,rgba(0,0,0,.25));cursor:not-allowed;}
+  .seg-pill :focus-visible{outline:2px solid var(--sc,var(--brand,#1677ff));outline-offset:2px;border-radius:var(--r-small,4px);}
+  .seg-pill .seg-item.is-locked:focus-visible{outline:none;}
 `;
 
 function SegmentedPill(props) {

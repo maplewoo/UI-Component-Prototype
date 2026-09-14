@@ -1,5 +1,8 @@
 # SegmentedPill — SPEC
 
+## 0 · 令牌合规 Token Compliance（MANDATORY）
+本组件所有取色/尺寸/字号/字重/行高/圆角/阴影/层级一律引用 `../design-tokens.md` 定义的令牌变量，实现里写成 `var(--token, 兜底字面值)`，不得裸写死数值。凡 design-tokens 规定的值即本件强制默认值；props 仅作覆盖入口，默认必须等于令牌值，页面级随意改令牌值视为违规。宿主页面须先声明 design-tokens 的 :root 令牌块。下方各节 MANDATORY 项均已按令牌取值。
+
 ## Purpose
 少量互斥分段（Tab）切换：滑块指示选中项，支持每段可选"锁定"。
 
@@ -10,12 +13,12 @@
   <button class="seg-item is-active|is-locked">label</button> ...
 </div>
 ```
-容器 `padding:4px; background:#eef0f3; border-radius:10px`（MANDATORY）；滑块绝对定位在容器内、`width:calc((100% - 8px)/N)`。
+容器 `padding:4px`（灰槽内距 4，MANDATORY）`background:var(--track,#eef0f3); border-radius:10px`（MANDATORY）；滑块绝对定位在容器内、`width:calc((100% - 8px)/N)`。
 
 ## States
 - active：滑块覆盖该段，文字白色。
-- inactive：透明底，文字 `rgba(0,0,0,0.88)`。
-- locked：文字 `rgba(0,0,0,0.25)`，`cursor:not-allowed`；点击不切换、触发 `onLockClick`。
+- inactive：透明底，文字 `var(--t1,rgba(0,0,0,.88))`（`--t1`）。
+- locked：文字 `var(--t4,rgba(0,0,0,.25))`（`--t4`），`cursor:not-allowed`；点击不切换、触发 `onLockClick`。
 
 ## Interaction Rules
 - 点击未锁定段 → `onChange(value)`；滑块随之位移动画。
@@ -24,10 +27,10 @@
 - 受控：`value` 由宿主持有。
 
 ## Visual Rules
-- 滑块 `background:var(--sc,#1677ff); border-radius:6px; box-shadow:0 1px 3px rgba(16,24,40,0.15)`；`transition:transform .28s cubic-bezier(.4,0,.2,1)`（MANDATORY：唯一位移动画，颜色可配）。
-- 段 `font-size:16px; font-weight:600; padding:8px 12px; border-radius:6px; flex:1 1 50%`（宽度等分，MANDATORY）；`z-index:1` 使文字在滑块之上。
-- 段文字色随 active 变白（`transition:color .28s ease`）。
-- `:focus-visible` 焦点环 2px 主色（无障碍，MANDATORY 保留可聚焦）。
+- 滑块 `background:var(--sc,var(--brand,#1677ff)); border-radius:var(--r-ctrl,6px); box-shadow:0 1px 3px rgba(16,24,40,0.15)`；`transition:transform .28s cubic-bezier(.4,0,.2,1)`（MANDATORY：唯一位移动画；底色默认 `--brand`#1677ff，`activeColor` 仅作覆盖入口）。
+- 段字号属"卡片标题级"：`font-size:var(--f-sub,16px); font-weight:var(--fw-strong,600)`（MANDATORY，design-tokens §3）；`padding:8px 12px; border-radius:var(--r-ctrl,6px); flex:1 1 50%`（宽度等分，MANDATORY）；`z-index:1` 使文字在滑块之上。
+- 段文字色随 active 变白（选中项白字，MANDATORY），`transition:color .28s ease`。
+- `:focus-visible` 焦点环 2px `--brand`(#1677ff) + 2px 外偏移（无障碍，MANDATORY 保留可聚焦）；禁用（locked）态不给焦点环（design-tokens §5）。
 
 ## Data Contract
 props：
@@ -36,7 +39,7 @@ props：
 - `onChange(value)`（必填）
 - `lockPredicate?: (value)=>boolean`（选填）
 - `onLockClick?: (value)=>void`（选填，默认无操作）
-- `activeColor?: string`（滑块/激活主色，默认 `#1677ff`）
+- `activeColor?: string`（滑块/激活主色覆盖入口，默认 = 令牌 `--brand`#1677ff）
 - `width?: number|'100%'`（默认固定 360，可 `fill` 撑满）
 
 ## External Dependencies
@@ -47,7 +50,7 @@ props：
 - 等宽分段（`flex:1 1 50%` 类）；如需按内容宽要另做变体（当前不支持）。
 
 ## Demo-Only Properties
-- `360px` 宽、`16px` 字号（可按密度调，属变体）、示例分段文案"视图A/视图B"。
+- `360px` 默认宽（`width` prop 覆盖入口，属页面布局而非令牌）、示例分段文案"视图A/视图B"。注：`16px` 字号属"卡片标题级"由 design-tokens §3 规定，已升级 Visual Rules MANDATORY，不再属 Demo-Only。
 
 ## Migration Rules
 - 原页 `cs-seg / cs-seg-thumb / cs-seg-item(.is-active/.is-locked)` → `seg-pill / seg-thumb / seg-item`。
