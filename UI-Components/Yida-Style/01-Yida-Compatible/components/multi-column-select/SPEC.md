@@ -1,7 +1,7 @@
 # MultiColumnSelect — SPEC
 
-## 0 · 令牌合规 Token Compliance（MANDATORY）
-本组件所有取色/尺寸/字号/字重/行高/圆角/阴影/层级一律引用 `../design-tokens.md` 定义的令牌变量，实现里写成 `var(--token, 兜底字面值)`，不得裸写死数值。凡 design-tokens 规定的值即本件强制默认值；props 仅作覆盖入口，默认必须等于令牌值，页面级随意改令牌值视为违规。宿主页面须先声明 design-tokens 的 :root 令牌块。下方各节 MANDATORY 项均已按令牌取值。
+## 0 · 令牌取值约定（Token Defaults）
+本组件取色/尺寸/字号/字重/行高/圆角/阴影/层级一律引用 `../design-tokens.md` 令牌，实现写成 `var(--token, 兜底字面值)`、不裸写死。凡令牌规定的值：组件暴露了覆盖入口（props 中有对应项）的一律标 `Default 按令牌`（默认值＝令牌值，可覆盖但页面别随意改）；仅无任何覆盖入口（没有选择）的结构性规则才标 `MANDATORY`。宿主页面须先声明 design-tokens 的 :root 令牌块。
 
 ## Purpose
 antd `Select` 的可复用变体：展开面板带一行表头，每个选项渲染为一行多列（文本 / 迷你进度条 / 色阶日期标签）。选中的收起态仍用普通文本 label。
@@ -32,12 +32,12 @@ antd `Select` 的可复用变体：展开面板带一行表头，每个选项渲
 - 组件本身不请求数据，选项由宿主传入。
 
 ## Visual Rules
-- 面板 `min-width: 950px`（**MANDATORY**，design-tokens §4，非"可配"；props 默认必须 = 950）：防止窄容器下旧内核把 grid 列压塌。
-- 一级过滤器（选择项目）8 列固定宽 **`90/90/90/140/140/140/90/90`**（+末列 `1fr` 吸收剩余）、**8 列全部居中**（**MANDATORY**，design-tokens §4；原误列 Demo-Only，现纠正为强制）。
+- 面板 `min-width: 950px`（**Default 按令牌**，design-tokens §4 默认值，可经 `panelMinWidth` 覆盖、默认必须 = 950）：防止窄容器下旧内核把 grid 列压塌。
+- 一级过滤器（选择项目）8 列默认宽 **`90/90/90/140/140/140/90/90`**（**Default 按令牌**：design-tokens §4 默认值，可经 `columns[].width` 覆盖）、+末列 `1fr` 吸收剩余、**8 列全部居中**（**MANDATORY**，design-tokens §4，无覆盖入口）。
 - 截断规则（**MANDATORY**，design-tokens §4）：主机厂最多 3 中文字（`maxChars:3` → `maxWidth 42px`）、总成类别最多 5 字（`maxChars:5` → `maxWidth 70px`），超出用 **`text-overflow:clip` 直接截断、不显省略号**；其余文本列可用 `ellipsis`。
 - 覆盖 antd option 默认左右内距：`.mcs-panel .ant-select-item{padding-left:0;padding-right:0}`、`option-content{overflow:visible}`（MANDATORY：否则富单元格被裁切/错位）。
 - 迷你进度条高 **8px**（MANDATORY，design-tokens §4）：轨道 `#eef0f3`（`--track`），填充色由列 `progressColor` 决定且默认为令牌值（自查 `#19C355`=`--j-pass`、复查 `#1677ff`=`--brand`），右侧百分比同色（MANDATORY 数字与条同色）。
-- 冻结日期色阶（**MANDATORY 用令牌色**，阈值默认 14/30 天可覆盖）：无日期=灰底 `#eef0f3`（`--track`）+ 深字 `rgba(0,0,0,0.45)`（`--t3`）；到期（≤14 天）红 `#F44336`（`--j-fail`）；临期（≤30 天）琥珀 `#FFB300`（`--j-cond`）；其余蓝 `#1677ff`（`--brand`），字色 `#fff`（非令牌）。
+- 冻结日期色阶（**MANDATORY 用令牌色**；阈值 `Default 按令牌`：默认 14/30 天，可经 `freezeThresholds` prop 覆盖）：无日期=灰底 `#eef0f3`（`--track`）+ 深字 `rgba(0,0,0,0.45)`（`--t3`）；到期（≤14 天）红 `#F44336`（`--j-fail`）；临期（≤30 天）琥珀 `#FFB300`（`--j-cond`）；其余蓝 `#1677ff`（`--brand`），字色 `#fff`（非令牌）。
 - 字号：单元格正文/表头 `14px`（`--f-body`）；日期标签与进度百分比 `12px`（`--f-aux`）。表头字重 `600`（`--fw-strong`）、色 `rgba(0,0,0,0.65)`（`--t2`）；日期标签字重 `600`（`--fw-strong`）。数字 `tabular-nums`。
 - 日期标签圆角 `4px`（`--r-small`）。表头底边线 `1px solid #f0f0f0`（`--line`）。
 
@@ -50,7 +50,7 @@ props：
   - dateChip 列 cells 值 = `{ date: string, remaining: number|null }`
 - `columns`: `[{ key, label, width, align?, type?('text'|'progress'|'dateChip'), maxChars?, truncate?('clip'|'ellipsis'), progressColor?, format? }]`
 - 透传：`placeholder`、`loading`、`disabled`、`allowClear`（默认 true）、`showSearch`（默认 true）、`style`、`popupClassName`。
-- `panelMinWidth`（默认 **950**，MANDATORY=design-tokens §4，仅作覆盖入口、默认不得改）、`freezeThresholds`（默认 `{ due:14, soon:30 }`）。
+- `panelMinWidth`（**Default 按令牌**，默认 **950**＝design-tokens §4，可覆盖但别随意改）、`freezeThresholds`（**Default 按令牌**，默认 `{ due:14, soon:30 }`）。
 
 ## External Dependencies
 - 仅 antd `Select`（宜搭运行时已提供）。
@@ -63,8 +63,8 @@ props：
 
 ## Demo-Only Properties
 - 仅剩示例列的"内容"（列名与文案）、示例数据、示例收起宽度 340 可由 `columns`/`style` 改写。
-- 更正：`90/90/90/140/140/140/90/90` 列宽组合、8 列全居中、主机厂 3 字(42px)/总成 5 字(70px) `text-overflow:clip` 截断、容器 `min-width 950` 原误列为 Demo-Only，现按 design-tokens §4 一律为 **MANDATORY**，不得页面级改动。
-- 规范本体：表头与行共用 grid + §4 强制列宽/截断/min-width + 颜色一律 `var(--token, 兜底字面)`。
+- 更正：主机厂 3 字(42px)/总成 5 字(70px) `text-overflow:clip` 截断、8 列全部居中——无覆盖入口，按 design-tokens §4 为 **MANDATORY**，不得页面级改动；`90/90/90/140/140/140/90/90` 列宽与容器 `min-width 950` 为 **Default 按令牌**（分别可经 `columns[].width`、`panelMinWidth` 覆盖，默认＝令牌值）。
+- 规范本体：表头与行共用 grid（+末列 `1fr`）+ §4 居中/clip 截断（固定）+ 列宽/min-width（`Default 按令牌`）+ 颜色一律 `var(--token, 兜底字面)`。
 
 ## Migration Rules
 - 原页 `cs-dd-wrap / cs-dd-head / cs-dd-row / cs-dd-*` → 泛化为 `mcs-*` + `columns/options` 配置。
