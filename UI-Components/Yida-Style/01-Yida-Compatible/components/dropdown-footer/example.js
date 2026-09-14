@@ -7,10 +7,10 @@ var dfScope = (cls) => (
   <style>{`
     .${cls} .ant-select-item-option{display:flex;align-items:center;}
     .${cls} .ant-select-item-option-state{display:none;}
-    .${cls} .ant-select-item-option-selected{background:#e6f4ff !important;font-weight:600;}
-    .${cls} .df-chk{width:14px;height:14px;border-radius:3px;border:1px solid #d9d9d9;background:#fff;flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;}
-    .${cls} .df-chk.on{background:#1677ff;border-color:#1677ff;}
-    .${cls} .df-count{margin-left:auto;font-size:12px;color:rgba(0,0,0,0.45);font-variant-numeric:tabular-nums;}
+    .${cls} .ant-select-item-option-selected{background:var(--brand-bg,#e6f4ff) !important;font-weight:var(--fw-strong,600);}
+    .${cls} .df-chk{width:14px;height:14px;border-radius:var(--r-small,3px);border:1px solid var(--line-strong,#d9d9d9);background:#fff;flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;}
+    .${cls} .df-chk.on{background:var(--brand,#1677ff);border-color:var(--brand,#1677ff);}
+    .${cls} .df-count{margin-left:auto;font-size:var(--f-aux,12px);color:var(--t3,rgba(0,0,0,.45));font-variant-numeric:tabular-nums;}
   `}</style>
 );
 
@@ -27,16 +27,16 @@ function OptionCheck(props) {
 function OptionCount(props) {
   var n = Number(props.count) || 0;
   var zero = n === 0 && props.mutedAtZero !== false;
-  return <span className="df-count" style={zero ? { color: 'rgba(0,0,0,0.25)' } : undefined}>{n}</span>;
+  return <span className="df-count" style={zero ? { color: 'var(--t4,rgba(0,0,0,.25))' } : undefined}>{n}</span>;
 }
 
 function DropdownFooter(props) {
   var left = props.left != null ? props.left : ('已选 ' + (props.selectedCount || 0) + ' 项');
   var right = props.right != null ? props.right : (
-    <span className="df-link" style={{ color: '#1677ff', cursor: 'pointer' }} onClick={props.onClear}>{props.clearText || '清空'}</span>
+    <span className="df-link" style={{ color: 'var(--brand,#1677ff)', cursor: 'pointer' }} onClick={props.onClear}>{props.clearText || '清空'}</span>
   );
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, padding: '6px 10px', borderTop: '1px solid #f0f0f0', marginTop: 4, fontSize: 12, color: 'rgba(0,0,0,0.45)' }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, padding: '6px 10px', borderTop: '1px solid var(--line,#f0f0f0)', marginTop: 4, fontSize: 'var(--f-aux,12px)', color: 'var(--t3,rgba(0,0,0,.45))' }}>
       <span>{left}</span>
       {right}
     </div>

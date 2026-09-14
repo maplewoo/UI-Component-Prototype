@@ -1,5 +1,8 @@
 # DropdownFooter — SPEC
 
+## 0 · 令牌合规 Token Compliance（MANDATORY）
+本组件所有取色/尺寸/字号/字重/行高/圆角/阴影/层级一律引用 `../design-tokens.md` 定义的令牌变量，实现里写成 `var(--token, 兜底字面值)`，不得裸写死数值。凡 design-tokens 规定的值即本件强制默认值；props 仅作覆盖入口，默认必须等于令牌值，页面级随意改令牌值视为违规。宿主页面须先声明 design-tokens 的 :root 令牌块。下方各节 MANDATORY 项均已按令牌取值。
+
 ## Purpose
 多选下拉面板的两件自定义元素 + 可选计数：`OptionCheck`（勾选框）、`DropdownFooter`（底栏）、`OptionCount`（右侧灰计数）。三者配套 antd 多选 `Select`。
 
@@ -21,11 +24,12 @@
 - 左/右若传入 ReactNode，则 `DropdownFooter` 不接管其交互。
 
 ## Visual Rules
-- OptionCheck：`14×14`，圆角 3，边框 `#d9d9d9`，未选背景 `#fff`；选中背景/边框 `#1677ff`、勾为白色（MANDATORY）。
-- DropdownFooter：`display:flex; justify-content:space-between; gap:8px; padding:6px 10px; border-top:1px solid #f0f0f0; margin-top:4px; font-size:12px; color:rgba(0,0,0,0.45)`（MANDATORY）。
-- 链接 `.df-link`：`color:#1677ff; cursor:pointer`（MANDATORY）。
-- OptionCount：`margin-left:auto; font-size:12px; color:rgba(0,0,0,0.45); font-variant-numeric:tabular-nums`（MANDATORY 右靠 + 等宽）。
-- 选中项底色 `#e6f4ff` + `font-weight:600`（MANDATORY，覆盖 antd 默认选中样式）。
+- 面板（`popupClassName` 作用域）：圆角 6（`--r-ctrl`）、阴影 `--sh-pop`、行高 32（`--h-ctrl-lg`）、左右内距 10px（MANDATORY）。
+- OptionCheck：`14x14`，圆角 `--r-small`（14/3 为定稿），边框 `--line-strong`（#d9d9d9），未选背景 `#fff`；选中背景/边框 `--brand`（#1677ff）、勾为白色（MANDATORY）。
+- DropdownFooter：`display:flex; justify-content:space-between; gap:8px; padding:6px 10px; border-top:1px solid var(--line,#f0f0f0); margin-top:4px; font-size:var(--f-aux,12px); color:var(--t3,rgba(0,0,0,.45))`（MANDATORY）。
+- 链接 `.df-link`：`color:var(--brand,#1677ff); cursor:pointer`（MANDATORY）。
+- OptionCount：`margin-left:auto; font-size:var(--f-aux,12px); color:var(--t3,rgba(0,0,0,.45)); font-variant-numeric:tabular-nums`（MANDATORY 右靠 + 等宽）；`count===0` 淡显 `color:var(--t4,rgba(0,0,0,.25))`（MANDATORY）。
+- 选中项底色 `var(--brand-bg,#e6f4ff)` + `font-weight:var(--fw-strong,600)`（MANDATORY，覆盖 antd 默认选中样式）。
 - 上述作用于 `popupClassName` 作用域（面板 portal 到 body）。
 
 ## Data Contract
@@ -43,7 +47,7 @@ DropdownFooter：
 - 清空/模式切换的实际数据处理在宿主。
 
 ## Implementation Constraints
-- Portal：勾选框/选中底色必须写在 `popupClassName` 作用域内且用字面色（面板脱离页面令牌容器）。
+- Portal：勾选框/选中底色写在 `popupClassName` 作用域内，值用 `var(--token, 字面兜底)`（fallback 保证脱离令牌容器时仍生效）。
 - 关闭 antd 默认右侧状态勾选（`.ant-select-item-option-state{display:none}`），用 OptionCheck 取代。
 
 ## Demo-Only Properties
