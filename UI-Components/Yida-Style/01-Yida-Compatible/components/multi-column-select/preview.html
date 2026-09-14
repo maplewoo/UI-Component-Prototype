@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MultiColumnSelect 预览</title>
+<style>
+  body { margin: 0; padding: 32px; background: #f5f7fa;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; color: rgba(0,0,0,0.88); }
+  .cap { font-size: 12px; color: rgba(0,0,0,0.45); margin: 0 0 8px; }
+  .mcs-collapsed { width: 340px; height: 32px; line-height: 30px; padding: 0 11px; border: 1px solid #d9d9d9;
+    border-radius: 6px; background: #fff; margin-bottom: 16px; }
+
+  /* ==== open panel (portal 到 body，故颜色写字面值) ==== */
+  .mcs-panel { min-width: 950px; background: #fff; border: 1px solid #f0f0f0; border-radius: 8px;
+    box-shadow: 0 6px 16px rgba(16,24,40,0.14); }
+  .mcs-head, .mcs-row { display: grid; align-items: center; gap: 10px;
+    grid-template-columns: 90px 90px 90px 140px 140px 140px 90px 90px 1fr; min-width: 950px; }
+  .mcs-head { padding: 6px 8px; border-bottom: 1px solid #f0f0f0; font-size: 14px; font-weight: 600; color: rgba(0,0,0,0.65); }
+  .mcs-head > span:nth-child(-n+8), .mcs-row > span:nth-child(-n+8) { justify-self: center; text-align: center; }
+  .mcs-row { padding: 7px 8px; border-radius: 4px; cursor: pointer; transition: background .18s; font-variant-numeric: tabular-nums; }
+  .mcs-row:hover { background: #e6f4ff; }
+  .mcs-date { justify-self: center; font-size: 12px; font-weight: 600; color: #fff; background: #1677ff; padding: 2px 6px; border-radius: 4px; }
+  .mcs-date.soon { background: #FFB300; } .mcs-date.due { background: #F44336; } .mcs-date.none { background: #eef0f3; color: rgba(0,0,0,0.45); }
+  .mcs-oem { font-size: 14px; max-width: 42px; overflow: hidden; text-overflow: clip; white-space: nowrap; }
+  .mcs-veh { font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .mcs-cat { font-size: 14px; max-width: 70px; overflow: hidden; text-overflow: clip; white-space: nowrap; }
+  .mcs-eng { font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .mcs-rate { display: inline-flex; align-items: center; gap: 8px; justify-self: center; }
+  .mcs-bar { position: relative; flex: 0 0 84px; width: 84px; height: 8px; border-radius: 99px; background: #eef0f3; overflow: hidden; }
+  .mcs-bar i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 99px; background: #19C355; }
+  .mcs-bar.rev i { background: #1677ff; }
+  .mcs-pv { font-style: normal; font-weight: 600; font-size: 12px; color: #19C355; min-width: 34px; text-align: right; }
+  .mcs-rate.rev .mcs-pv { color: #1677ff; }
+</style>
+</head>
+<body>
+  <p class="cap">收起态（显示选中 label）</p>
+  <div class="mcs-collapsed">客户B - P-200 - 侧围总成</div>
+
+  <p class="cap">展开态：表头 + 多列富单元格（冻结色阶 / 进度条 / 截断）</p>
+  <div class="mcs-panel">
+    <div class="mcs-head">
+      <span>冻结时间</span><span>主机厂</span><span>车型代号</span><span>总成类别</span>
+      <span>自查</span><span>复查</span><span>产品工程师</span><span>资深工程师</span><span></span>
+    </div>
+    <div class="mcs-row">
+      <span class="mcs-date due">09-20</span><span class="mcs-oem">甲</span><span class="mcs-veh">P-100</span><span class="mcs-cat">前围</span>
+      <span class="mcs-rate"><span class="mcs-bar"><i style="width:40%"></i></span><em class="mcs-pv">40%</em></span>
+      <span class="mcs-rate rev"><span class="mcs-bar rev"><i style="width:10%"></i></span><em class="mcs-pv">10%</em></span>
+      <span class="mcs-eng">张三</span><span class="mcs-eng">李四</span><span></span>
+    </div>
+    <div class="mcs-row">
+      <span class="mcs-date soon">10-05</span><span class="mcs-oem">乙丙丁</span><span class="mcs-veh">P-200</span><span class="mcs-cat">侧围总成装饰</span>
+      <span class="mcs-rate"><span class="mcs-bar"><i style="width:75%"></i></span><em class="mcs-pv">75%</em></span>
+      <span class="mcs-rate rev"><span class="mcs-bar rev"><i style="width:55%"></i></span><em class="mcs-pv">55%</em></span>
+      <span class="mcs-eng">王五</span><span class="mcs-eng">赵六</span><span></span>
+    </div>
+    <div class="mcs-row">
+      <span class="mcs-date">11-30</span><span class="mcs-oem">丁</span><span class="mcs-veh">X-300</span><span class="mcs-cat">后背门</span>
+      <span class="mcs-rate"><span class="mcs-bar"><i style="width:100%"></i></span><em class="mcs-pv">100%</em></span>
+      <span class="mcs-rate rev"><span class="mcs-bar rev"><i style="width:92%"></i></span><em class="mcs-pv">92%</em></span>
+      <span class="mcs-eng">孙七</span><span class="mcs-eng">周八</span><span></span>
+    </div>
+    <div class="mcs-row">
+      <span class="mcs-date none">未设置</span><span class="mcs-oem">戊</span><span class="mcs-veh">Y-400</span><span class="mcs-cat">翼子板</span>
+      <span class="mcs-rate"><span class="mcs-bar"><i style="width:0%"></i></span><em class="mcs-pv">0%</em></span>
+      <span class="mcs-rate rev"><span class="mcs-bar rev"><i style="width:0%"></i></span><em class="mcs-pv">0%</em></span>
+      <span class="mcs-eng">吴九</span><span class="mcs-eng">郑十</span><span></span>
+    </div>
+  </div>
+</body>
+</html>
