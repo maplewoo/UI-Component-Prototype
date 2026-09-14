@@ -1,5 +1,8 @@
 # KeywordTagSearch — SPEC
 
+## 0 · 令牌合规 Token Compliance（MANDATORY）
+本组件所有取色/尺寸/字号/字重/行高/圆角/阴影/层级一律引用 `../design-tokens.md` 定义的令牌变量，实现里写成 `var(--token, 兜底字面值)`，不得裸写死数值。凡 design-tokens 规定的值即本件强制默认值；props 仅作覆盖入口，默认必须等于令牌值，页面级随意改令牌值视为违规。宿主页面须先声明 design-tokens 的 :root 令牌块。下方各节 MANDATORY 项均已按令牌取值。
+
 ## Purpose
 标签式关键词筛选：回车加词 + 历史下拉（带命中数/勾选）+ 任一/全部匹配模式切换。
 
@@ -24,16 +27,20 @@
 - 组件不请求数据；命中计数由 `countFor(word)` 提供。
 
 ## Visual Rules
-- 标签/面板观感同 `dropdown-footer`：勾选框 14px、选中 `#1677ff`；命中数右靠、等宽、0 淡显。
-- 提示行：`按回车添加「typed」` 文案（`typedAddLabel(typed)` 可配），命中数右靠。
+- 面板（`popupClassName` 作用域）：圆角 6（`--r-ctrl`）、阴影 `--sh-pop`、行高 32（`--h-ctrl-lg`）、左右内距 10px（MANDATORY）。
+- 勾选框/选中项/底栏观感同 `dropdown-footer`：勾选框 14x14 圆角 `--r-small`（14/3 为定稿）、未选边框 `--line-strong`、选中 `--brand`；选中项底 `--brand-bg` + `--fw-strong`(600)；命中数右靠 12（`--f-aux`）`--t3`、0 淡显 `--t4`（MANDATORY）。
+- 非状态项历史行前灰点 8x8 圆角 2，颜色 `--line-strong`(#d9d9d9)（MANDATORY，属 `--j-pending-dot` 系非状态指示）。
+- 提示行（回车添加）：行高 32（`--h-ctrl-lg`）、左右内距 10、字号 `--f-body`(14px)、文案色 `--t2`，命中数右靠同 OptionCount 规则（MANDATORY）。
+- 历史词最多最近 **5** 条（MANDATORY 业务规则，design-tokens §4）；超 5 条由宿主截断。
+- 命中数只显示数字，不显示文字标签（MANDATORY）。
 - 标签名超长省略号（`.kt-name` ellipsis）。
-- 面板元素作用在 `popupClassName` 作用域，颜色写字面（portal）。
+- 面板元素作用在 `popupClassName` 作用域，颜色写 `var(--token, 字面)`（portal）。
 
 ## Data Contract
 props：
 - `value: string[]`（受控）
 - `onChange(words: string[])`
-- `history?: string[]`（宿主提供、去重、截断，如最近 5）
+- `history?: string[]`（宿主提供、去重、截断，**最多最近 5 条 MANDATORY**）
 - `countFor?: (word)=>number`（命中计数）
 - `matchMode?: 'any'|'all'`
 - `onMatchModeChange?: (m)=>void`（提供才显示模式切换底栏）

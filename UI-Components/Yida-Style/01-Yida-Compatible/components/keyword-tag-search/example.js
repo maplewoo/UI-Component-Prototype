@@ -8,11 +8,11 @@ var ktScope = (cls) => (
   <style>{`
     .${cls} .ant-select-item-option{display:flex;align-items:center;}
     .${cls} .ant-select-item-option-state{display:none;}
-    .${cls} .ant-select-item-option-selected{background:#e6f4ff !important;font-weight:600;}
-    .${cls} .kt-chk{width:14px;height:14px;border-radius:3px;border:1px solid #d9d9d9;background:#fff;flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;}
-    .${cls} .kt-chk.on{background:#1677ff;border-color:#1677ff;}
+    .${cls} .ant-select-item-option-selected{background:var(--brand-bg,#e6f4ff) !important;font-weight:var(--fw-strong,600);}
+    .${cls} .kt-chk{width:14px;height:14px;border-radius:var(--r-small,3px);border:1px solid var(--line-strong,#d9d9d9);background:#fff;flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;}
+    .${cls} .kt-chk.on{background:var(--brand,#1677ff);border-color:var(--brand,#1677ff);}
     .${cls} .kt-name{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-    .${cls} .kt-cnt{margin-left:auto;font-size:12px;color:rgba(0,0,0,0.45);font-variant-numeric:tabular-nums;}
+    .${cls} .kt-cnt{margin-left:auto;font-size:var(--f-aux,12px);color:var(--t3,rgba(0,0,0,.45));font-variant-numeric:tabular-nums;}
   `}</style>
 );
 
@@ -52,9 +52,9 @@ function KeywordTagSearch(props) {
           return (
             <span style={{ display: 'flex', alignItems: 'center', gap: 8, width: '100%' }}>
               <Check checked={value.indexOf(w) >= 0} />
-              <i style={{ width: 8, height: 8, borderRadius: 2, background: '#d9d9d9', flex: '0 0 auto' }} />
+              <i style={{ width: 8, height: 8, borderRadius: 2, background: 'var(--line-strong,#d9d9d9)', flex: '0 0 auto' }} />
               <span className="kt-name">{w}</span>
-              <span className="kt-cnt" style={n === 0 ? { color: 'rgba(0,0,0,0.25)' } : undefined}>{n}</span>
+              <span className="kt-cnt" style={n === 0 ? { color: 'var(--t4,rgba(0,0,0,.25))' } : undefined}>{n}</span>
             </span>
           );
         }}
@@ -64,22 +64,22 @@ function KeywordTagSearch(props) {
           return (
             <div>
               {showHint ? (
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8, minHeight: 32, padding: '0 10px', fontSize: 14 }}>
-                  <span style={{ flex: '1 1 auto', color: 'rgba(0,0,0,0.65)' }}>{props.typedAddLabel ? props.typedAddLabel(t) : ('按回车添加「' + t + '」')}</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, minHeight: 'var(--h-ctrl-lg,32px)', padding: '0 10px', fontSize: 'var(--f-body,14px)' }}>
+                  <span style={{ flex: '1 1 auto', color: 'var(--t2,rgba(0,0,0,.65))' }}>{props.typedAddLabel ? props.typedAddLabel(t) : ('按回车添加「' + t + '」')}</span>
                   <span className="kt-cnt">{countFor(t)}</span>
                 </div>
               ) : null}
               {menu}
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, padding: '6px 10px', borderTop: '1px solid #f0f0f0', marginTop: 4, fontSize: 12, color: 'rgba(0,0,0,0.45)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, padding: '6px 10px', borderTop: '1px solid var(--line,#f0f0f0)', marginTop: 4, fontSize: 'var(--f-aux,12px)', color: 'var(--t3,rgba(0,0,0,.45))' }}>
                 {props.onMatchModeChange ? (
                   <React.Fragment>
                     <span>模式[{props.matchMode === 'all' ? '全部' : '任一'}]</span>
-                    <span style={{ color: '#1677ff', cursor: 'pointer' }} onClick={function () { props.onMatchModeChange(props.matchMode === 'all' ? 'any' : 'all'); }}>改为[{props.matchMode === 'all' ? '任一' : '全部'}]</span>
+                    <span style={{ color: 'var(--brand,#1677ff)', cursor: 'pointer' }} onClick={function () { props.onMatchModeChange(props.matchMode === 'all' ? 'any' : 'all'); }}>改为[{props.matchMode === 'all' ? '任一' : '全部'}]</span>
                   </React.Fragment>
                 ) : (
                   <React.Fragment>
                     <span>已选 {value.length} 项</span>
-                    <span style={{ color: '#1677ff', cursor: 'pointer' }} onClick={function () { props.onChange([]); }}>清空</span>
+                    <span style={{ color: 'var(--brand,#1677ff)', cursor: 'pointer' }} onClick={function () { props.onChange([]); }}>清空</span>
                   </React.Fragment>
                 )}
               </div>

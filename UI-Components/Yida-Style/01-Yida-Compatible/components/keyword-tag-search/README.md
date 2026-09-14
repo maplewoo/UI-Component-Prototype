@@ -5,4 +5,4 @@
 - 解决的问题：把 antd `Select mode=tags` 做成带历史、命中计数、匹配模式切换的搜索式筛选器，复用统一的面板元素观感。
 - 典型场景：文本字段的关键词过滤、标签式搜索。
 - 宜搭兼容版本：是（`01-Yida-Compatible`）。基于 antd `Select`（tags 模式）；面板元素与 `dropdown-footer` 组件同源。
-- 当前版本：v0.1
+- 当前版本：v0.2
