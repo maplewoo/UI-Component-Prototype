@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>InlineValidationHint 预览</title>
+<style>
+  body { margin: 0; padding: 32px; background: #f5f7fa;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; }
+  .cap { font-size: 12px; color: rgba(0,0,0,0.45); margin: 18px 0 6px; }
+  .field { width: 240px; }
+  .field textarea { width: 100%; box-sizing: border-box; border: 1px solid #d9d9d9; border-radius: 6px; padding: 4px 8px; font-family: inherit; font-size: 14px; }
+  .field textarea.err { border-color: #F44336; }
+
+  /* ==== component ==== */
+  .vh-hint { display: inline-block; margin-top: 4px; font-size: 12px; line-height: 1.5715; max-width: 100%; white-space: normal; word-break: break-word; }
+  .vh-hint.vh-loading { color: #1677ff; }
+  .vh-hint.vh-info { color: rgba(0,0,0,0.45); }
+  .vh-hint.vh-pass { color: #19C355; }
+  .vh-hint.vh-fail, .vh-hint.vh-required { color: #F44336; }
+  .vh-hint svg { vertical-align: -1px; margin-right: 2px; }
+</style>
+</head>
+<body>
+  <div class="cap">pass（绿 · 勾 + 理由）</div>
+  <div class="field"><textarea>实测面差 0.3mm，符合图纸 ±0.5 要求</textarea>
+    <span class="vh-hint vh-pass"><svg viewBox="0 0 12 12" width="11" height="11" fill="none" stroke="#19C355" stroke-width="2"><path d="M2.5 6.5l2.5 2.5 4.5-5"/></svg>说明具体、可核验</span></div>
+
+  <div class="cap">loading（蓝 · 校验中）</div>
+  <div class="field"><textarea>已通过验证</textarea>
+    <span class="vh-hint vh-loading">校验中…</span></div>
+
+  <div class="cap">fail（红 · ! + 详细理由）</div>
+  <div class="field"><textarea class="err">OK</textarea>
+    <span class="vh-hint vh-fail">! 说明过于笼统：未写明实测值、判定依据与处理措施，请补充具体检查结果后再提交</span></div>
+
+  <div class="cap">required（红 · 短提示，与异步失败分开）</div>
+  <div class="field"><textarea class="err"></textarea>
+    <span class="vh-hint vh-required">! 必填</span></div>
+
+  <div class="cap">info（灰 · 中性提示）</div>
+  <div class="field"><textarea>已通过验证</textarea>
+    <span class="vh-hint vh-info">智能校验暂不可用，请人工确认</span></div>
+</body>
+</html>
