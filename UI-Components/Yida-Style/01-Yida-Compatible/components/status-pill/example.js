@@ -2,13 +2,13 @@
 // 纯展示；计数与配色由宿主传入。可选 interactive 变体用于点击筛选。
 
 var spStyles = `
-  .status-pill{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border:1px solid #f0f0f0;border-radius:13px;background:#fff;}
+  .status-pill{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border:1px solid var(--line,#f0f0f0);border-radius:13px;background:#fff;}
   .status-pill .sp-dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto;}
-  .status-pill .sp-num{font-weight:600;color:rgba(0,0,0,0.88);font-variant-numeric:tabular-nums;}
-  .status-pill .sp-lab{font-size:12px;color:rgba(0,0,0,0.45);}
+  .status-pill .sp-num{font-weight:var(--fw-strong,600);color:var(--t1,rgba(0,0,0,.88));font-variant-numeric:tabular-nums;}
+  .status-pill .sp-lab{font-size:var(--f-aux,12px);color:var(--t3,rgba(0,0,0,.45));}
   .status-pill.interactive{cursor:pointer;flex:0 0 auto;}
-  .status-pill.interactive:hover{background:#f5f7fa;}
-  .status-pill.interactive.on{background:#e6f4ff;border-color:#1677ff;}
+  .status-pill.interactive:hover{background:var(--fill-hover,#f5f7fa);}
+  .status-pill.interactive.on{background:var(--brand-bg,#e6f4ff);border-color:var(--brand,#1677ff);}
 `;
 
 function StatusPill(props) {
@@ -16,7 +16,7 @@ function StatusPill(props) {
   return (
     <span className={cls} onClick={props.interactive ? props.onClick : undefined}>
       <style>{spStyles}</style>
-      <i className="sp-dot" style={{ background: props.color || '#B0BEC5' }} />
+      <i className="sp-dot" style={{ background: props.color || 'var(--j-pending-dot,#b0bec5)' }} />
       <b className="sp-num">{Number(props.count) || 0}</b>
       <span className="sp-lab">{props.shortLabel || props.label}</span>
     </span>
