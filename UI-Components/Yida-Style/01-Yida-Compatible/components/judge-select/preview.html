@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>JudgeSelect 预览</title>
+<style>
+  body { margin: 0; padding: 32px; background: #f5f7fa;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; color: rgba(0,0,0,0.88); }
+  .cap { font-size: 12px; color: rgba(0,0,0,0.45); margin: 0 0 8px; }
+  .row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+
+  /* ==== readonly pill ==== */
+  .judge-pill { position: relative; width: 112px; height: 28px; display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; background: var(--jc, #ECEFF1); color: var(--jc-t, #fff); font-size: 14px; white-space: nowrap; overflow: hidden; font-variant-numeric: tabular-nums; }
+  /* ==== editable (pill + chevron) ==== */
+  .judge-select { position: relative; width: 112px; height: 28px; display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; background: var(--jc, #ECEFF1); color: var(--jc-t, #fff); font-size: 14px; white-space: nowrap; overflow: hidden; cursor: pointer; font-variant-numeric: tabular-nums; }
+  .judge-select::after { content: ""; position: absolute; right: 9px; top: 50%; width: 6px; height: 6px;
+    border-right: 1.4px solid var(--jc-t, #fff); border-bottom: 1.4px solid var(--jc-t, #fff); transform: translateY(-70%) rotate(45deg); opacity: .7; }
+
+  /* ==== open dropdown panel (portal, literal colors) ==== */
+  .judge-panel { width: 132px; background: #fff; border-radius: 8px; box-shadow: 0 6px 16px rgba(16,24,40,0.14); padding: 4px; margin-top: 6px; }
+  .judge-opt { min-height: 32px; padding: 5px 10px; display: flex; align-items: center; gap: 8px; font-size: 14px; border-radius: 4px; cursor: pointer; }
+  .judge-opt:hover { background: #f5f7fa; }
+  .judge-opt.sel { background: #e6f4ff; font-weight: 600; }
+  .judge-dot { width: 8px; height: 8px; border-radius: 2px; flex: 0 0 auto; }
+</style>
+</head>
+<body>
+  <p class="cap">只读态 pill（语义色示例，实际由宿主传入）</p>
+  <div class="row">
+    <span class="judge-pill" style="--jc:#ECEFF1;--jc-t:rgba(0,0,0,0.65)">待定</span>
+    <span class="judge-pill" style="--jc:#19C355;--jc-t:#fff">通过</span>
+    <span class="judge-pill" style="--jc:#FFB300;--jc-t:#fff">带条件</span>
+    <span class="judge-pill" style="--jc:#F44336;--jc-t:#fff">不通过</span>
+    <span class="judge-pill" style="--jc:#9E9E9E;--jc-t:#fff">不适用</span>
+  </div>
+
+  <p class="cap">可编辑态（右侧多一个小箭头）</p>
+  <div class="row">
+    <span class="judge-select" style="--jc:#19C355;--jc-t:#fff">通过</span>
+    <span class="judge-select" style="--jc:#FFB300;--jc-t:#fff">带条件</span>
+  </div>
+
+  <p class="cap">展开面板（选项前色点，选中项高亮）</p>
+  <div class="judge-panel">
+    <div class="judge-opt"><span class="judge-dot" style="background:#B0BEC5"></span>待定</div>
+    <div class="judge-opt sel"><span class="judge-dot" style="background:#19C355"></span>通过</div>
+    <div class="judge-opt"><span class="judge-dot" style="background:#FFB300"></span>带条件通过</div>
+    <div class="judge-opt"><span class="judge-dot" style="background:#F44336"></span>不通过</div>
+    <div class="judge-opt"><span class="judge-dot" style="background:#9E9E9E"></span>不适用</div>
+  </div>
+</body>
+</html>
