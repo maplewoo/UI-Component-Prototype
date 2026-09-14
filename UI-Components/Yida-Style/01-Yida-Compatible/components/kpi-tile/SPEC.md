@@ -1,9 +1,7 @@
 # KpiTile — SPEC
 
-## 0 · 令牌合规 Token Compliance（MANDATORY）
-本组件所有取色/尺寸/字号/字重/行高/圆角/阴影/层级一律引用 `../design-tokens.md` 定义的令牌变量，实现里写成 `var(--token, 兜底字面值)`，不得裸写死数值。凡 design-tokens 规定的值即本件强制默认值；props 仅作覆盖入口，默认必须等于令牌值，页面级随意改令牌值视为违规。宿主页面须先声明 design-tokens 的 :root 令牌块。下方各节 MANDATORY 项均已按令牌取值。
-
-组件设计与行为的最高依据。只有标 **MANDATORY** 的条目是强制约束；未标的按 `ADAPTER.md` / `preview.html` 说明处理。
+## 0 · 令牌取值约定（Token Defaults）
+本组件取色/尺寸/字号/字重/行高/圆角/阴影/层级一律引用 `../design-tokens.md` 令牌，实现写成 `var(--token, 兜底字面值)`、不裸写死。凡令牌规定的值：组件暴露了覆盖入口（props 中有对应项）的一律标 `Default 按令牌`（默认值＝令牌值，可覆盖但页面别随意改）；仅无任何覆盖入口（没有选择）的结构性规则才标 `MANDATORY`。宿主页面须先声明 design-tokens 的 :root 令牌块。
 
 ## Purpose
 并列展示单个关键指标：语义色条 + 标签 + 强调数值。纯展示，无交互。
@@ -28,7 +26,7 @@
 
 ## Visual Rules
 - 文本层级：label `12px`（`--f-aux`）/ `rgba(0,0,0,0.65)`（`--t2`）；value `16px`（`--f-sub`）/ `600`（`--fw-strong`）/ `1.3`（`--lh-heading`）/ letter-spacing -0.2px（非令牌，design-tokens 未定义）（MANDATORY 字号与字重）。
-- value 颜色 = `var(--kc)`（MANDATORY：数值与色条同源）。
+- value 颜色 = `var(--kc)`（Default 按令牌：默认取令牌色，可经 `color` prop 覆盖；与顶部色条同源）。
 - `font-variant-numeric: tabular-nums`（MANDATORY：数字等宽，多卡并排对齐）。
 - 圆角 `8px`（`--r-card`）、边框 `1px solid #f0f0f0`（`--line`）、背景 `#fff`（非令牌）、阴影 `0 1px 2px rgba(16,24,40,0.04)`（`--sh-card`）（MANDATORY）。
 - label 单行省略（`white-space:nowrap; overflow:hidden; text-overflow:ellipsis`）（MANDATORY）。
