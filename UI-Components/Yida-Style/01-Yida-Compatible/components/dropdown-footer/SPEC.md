@@ -1,7 +1,7 @@
 # DropdownFooter — SPEC
 
-## 0 · 令牌合规 Token Compliance（MANDATORY）
-本组件所有取色/尺寸/字号/字重/行高/圆角/阴影/层级一律引用 `../design-tokens.md` 定义的令牌变量，实现里写成 `var(--token, 兜底字面值)`，不得裸写死数值。凡 design-tokens 规定的值即本件强制默认值；props 仅作覆盖入口，默认必须等于令牌值，页面级随意改令牌值视为违规。宿主页面须先声明 design-tokens 的 :root 令牌块。下方各节 MANDATORY 项均已按令牌取值。
+## 0 · 令牌取值约定（Token Defaults）
+本组件取色/尺寸/字号/字重/行高/圆角/阴影/层级一律引用 `../design-tokens.md` 令牌，实现写成 `var(--token, 兜底字面值)`、不裸写死。凡令牌规定的值：组件暴露了覆盖入口（props 中有对应项）的一律标 `Default 按令牌`（默认值＝令牌值，可覆盖但页面别随意改）；仅无任何覆盖入口（没有选择）的结构性规则才标 `MANDATORY`。宿主页面须先声明 design-tokens 的 :root 令牌块。
 
 ## Purpose
 多选下拉面板的两件自定义元素 + 可选计数：`OptionCheck`（勾选框）、`DropdownFooter`（底栏）、`OptionCount`（右侧灰计数）。三者配套 antd 多选 `Select`。
@@ -26,8 +26,8 @@
 ## Visual Rules
 - 面板（`popupClassName` 作用域）：圆角 6（`--r-ctrl`）、阴影 `--sh-pop`、行高 32（`--h-ctrl-lg`）、左右内距 10px（MANDATORY）。
 - OptionCheck：`14x14`，圆角 `--r-small`（14/3 为定稿），边框 `--line-strong`（#d9d9d9），未选背景 `#fff`；选中背景/边框 `--brand`（#1677ff）、勾为白色（MANDATORY）。
-- DropdownFooter：`display:flex; justify-content:space-between; gap:8px; padding:6px 10px; border-top:1px solid var(--line,#f0f0f0); margin-top:4px; font-size:var(--f-aux,12px); color:var(--t3,rgba(0,0,0,.45))`（MANDATORY）。
-- 链接 `.df-link`：`color:var(--brand,#1677ff); cursor:pointer`（MANDATORY）。
+- DropdownFooter：`display:flex; justify-content:space-between; gap:8px; padding:6px 10px; border-top:1px solid var(--line,#f0f0f0); margin-top:4px; font-size:var(--f-aux,12px); color:var(--t3,rgba(0,0,0,.45))`（Default 按令牌；覆盖入口：`left`/`right`/`clearText`/`onClear`/`selectedCount`）。
+- 链接 `.df-link`：`color:var(--brand,#1677ff); cursor:pointer`（Default 按令牌；覆盖入口：`clearText`/`right`）。
 - OptionCount：`margin-left:auto; font-size:var(--f-aux,12px); color:var(--t3,rgba(0,0,0,.45)); font-variant-numeric:tabular-nums`（MANDATORY 右靠 + 等宽）；`count===0` 淡显 `color:var(--t4,rgba(0,0,0,.25))`（MANDATORY）。
 - 选中项底色 `var(--brand-bg,#e6f4ff)` + `font-weight:var(--fw-strong,600)`（MANDATORY，覆盖 antd 默认选中样式）。
 - 上述作用于 `popupClassName` 作用域（面板 portal 到 body）。

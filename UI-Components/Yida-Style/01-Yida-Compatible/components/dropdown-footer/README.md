@@ -5,4 +5,4 @@
 - 解决的问题：antd 多选下拉默认没有勾选框、没有底部计数/清空，各页各写一套样式；沉淀成标准面板元素。
 - 典型场景：列表页筛选栏的多选下拉、批量选择下拉。
 - 宜搭兼容版本：是（`01-Yida-Compatible`）。基于 antd `Select` 的 `optionRender`/`dropdownRender`，勾选框样式作用在 `popupClassName`。
-- 当前版本：v0.2
+- 当前版本：v0.3
