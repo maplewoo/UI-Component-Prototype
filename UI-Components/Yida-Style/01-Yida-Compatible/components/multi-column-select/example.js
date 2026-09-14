@@ -3,7 +3,7 @@
 import React from 'react';
 import { Select } from 'antd';
 
-// 面板为 portal，落在页面令牌作用域之外 → 覆盖 antd option 内距等只能在字面值 + popupClassName 作用域里写。
+// 面板为 portal，但 design-tokens 声明在 :root 全局可见 → 颜色写 var(--token, #字面兜底)，配合 popupClassName 作用域。
 function panelScopeStyle(popupClass) {
   return (
     <style>{`
@@ -21,23 +21,23 @@ function freezeClass(remaining, dateStr, thresholds) {
   if (typeof remaining === 'number' && remaining <= soon) { return 'soon'; }
   return '';
 }
-var FREEZE_BG = { '': '#1677ff', soon: '#FFB300', due: '#F44336', none: '#eef0f3' };
-var FREEZE_FG = { '': '#fff', soon: '#fff', due: '#fff', none: 'rgba(0,0,0,0.45)' };
+var FREEZE_BG = { '': 'var(--brand,#1677ff)', soon: 'var(--j-cond,#FFB300)', due: 'var(--j-fail,#F44336)', none: 'var(--track,#eef0f3)' };
+var FREEZE_FG = { '': '#fff', soon: '#fff', due: '#fff', none: 'var(--t3,rgba(0,0,0,0.45))' };
 
 function Cell(props) {
   var col = props.col;
   var raw = props.value;
-  var base = { fontSize: 14, overflow: 'hidden', whiteSpace: 'nowrap', minWidth: 0 };
+  var base = { fontSize: 'var(--f-body,14px)', overflow: 'hidden', whiteSpace: 'nowrap', minWidth: 0 };
   if (col.align === 'center') { base.textAlign = 'center'; }
   if (col.type === 'progress') {
     var pct = Math.max(0, Math.min(100, Number(raw) || 0));
-    var color = col.progressColor || '#19C355';
+    var color = col.progressColor || 'var(--j-pass,#19C355)';
     return (
       <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, justifySelf: 'center' }}>
-        <span style={{ position: 'relative', flex: '0 0 84px', width: 84, height: 8, borderRadius: 99, background: '#eef0f3', overflow: 'hidden' }}>
+        <span style={{ position: 'relative', flex: '0 0 84px', width: 84, height: 8, borderRadius: 99, background: 'var(--track,#eef0f3)', overflow: 'hidden' }}>
           <span style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: pct + '%', borderRadius: 99, background: color }} />
         </span>
-        <em style={{ fontStyle: 'normal', fontWeight: 600, fontSize: 12, color: color, minWidth: 34, textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>{pct}%</em>
+        <em style={{ fontStyle: 'normal', fontWeight: 'var(--fw-strong,600)', fontSize: 'var(--f-aux,12px)', color: color, minWidth: 34, textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>{pct}%</em>
       </span>
     );
   }
@@ -45,13 +45,13 @@ function Cell(props) {
     var d = raw || {};
     var cls = freezeClass(d.remaining, d.date, props.thresholds || {});
     return (
-      <span style={{ justifySelf: 'center', fontSize: 12, fontWeight: 600, color: FREEZE_FG[cls], background: FREEZE_BG[cls], padding: '2px 6px', borderRadius: 4 }}>
+      <span style={{ justifySelf: 'center', fontSize: 'var(--f-aux,12px)', fontWeight: 'var(--fw-strong,600)', color: FREEZE_FG[cls], background: FREEZE_BG[cls], padding: '2px 6px', borderRadius: 'var(--r-small,4px)' }}>
         {d.date || '未设置'}
       </span>
     );
   }
   var style = Object.assign({}, base);
-  if (col.maxChars) { style.maxWidth = col.maxChars * 14; }
+  if (col.maxChars) { style.maxWidth = col.maxChars * 14; } /* 14 = --f-body 字高基准：3字=42px、5字=70px */
   style.textOverflow = col.truncate === 'clip' ? 'clip' : 'ellipsis';
   return <span style={style}>{raw == null || raw === '' ? (col.placeholder || '-') : String(raw)}</span>;
 }
@@ -69,7 +69,7 @@ function MultiColumnSelect(props) {
   var grid = { display: 'grid', alignItems: 'center', gap: 10, gridTemplateColumns: gridTemplate(columns), minWidth: minW };
 
   var header = (
-    <div className="mcs-head" style={Object.assign({}, grid, { padding: '6px 8px', borderBottom: '1px solid #f0f0f0', fontSize: 14, fontWeight: 600, color: 'rgba(0,0,0,0.65)' })}>
+    <div className="mcs-head" style={Object.assign({}, grid, { padding: '6px 8px', borderBottom: '1px solid var(--line,#f0f0f0)', fontSize: 'var(--f-body,14px)', fontWeight: 'var(--fw-strong,600)', color: 'var(--t2,rgba(0,0,0,0.65))' })}>
       {columns.map(function (c) {
         return <span key={c.key} style={{ textAlign: c.align || 'left' }}>{c.label}</span>;
       })}
@@ -118,8 +118,8 @@ var DEMO_COLUMNS = [
   { key: 'customer', label: '主机厂', width: 90, align: 'center', maxChars: 3, truncate: 'clip' },
   { key: 'vehicle', label: '车型代号', width: 90, align: 'center' },
   { key: 'category', label: '总成类别', width: 140, align: 'center', maxChars: 5, truncate: 'clip' },
-  { key: 'selfRate', label: '自查', width: 140, align: 'center', type: 'progress', progressColor: '#19C355' },
-  { key: 'reviewRate', label: '复查', width: 140, align: 'center', type: 'progress', progressColor: '#1677ff' },
+  { key: 'selfRate', label: '自查', width: 140, align: 'center', type: 'progress', progressColor: 'var(--j-pass,#19C355)' },
+  { key: 'reviewRate', label: '复查', width: 140, align: 'center', type: 'progress', progressColor: 'var(--brand,#1677ff)' },
   { key: 'pe', label: '产品工程师', width: 90, align: 'center' },
   { key: 'se', label: '资深工程师', width: 90, align: 'center' },
 ];

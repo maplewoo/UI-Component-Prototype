@@ -1,5 +1,8 @@
 # MultiColumnSelect — SPEC
 
+## 0 · 令牌合规 Token Compliance（MANDATORY）
+本组件所有取色/尺寸/字号/字重/行高/圆角/阴影/层级一律引用 `../design-tokens.md` 定义的令牌变量，实现里写成 `var(--token, 兜底字面值)`，不得裸写死数值。凡 design-tokens 规定的值即本件强制默认值；props 仅作覆盖入口，默认必须等于令牌值，页面级随意改令牌值视为违规。宿主页面须先声明 design-tokens 的 :root 令牌块。下方各节 MANDATORY 项均已按令牌取值。
+
 ## Purpose
 antd `Select` 的可复用变体：展开面板带一行表头，每个选项渲染为一行多列（文本 / 迷你进度条 / 色阶日期标签）。选中的收起态仍用普通文本 label。
 
@@ -17,9 +20,9 @@ antd `Select` 的可复用变体：展开面板带一行表头，每个选项渲
 
 ## States
 - collapsed：显示选中项 `label`。
-- open：面板含表头 + 行；行 hover 高亮 `#e6f4ff`（MANDATORY hover 色）。
+- open：面板含表头 + 行；行 hover 高亮 `#e6f4ff`（`--brand-bg`）（MANDATORY hover 色）。
 - loading：Select 原生 loading 态（输入框右侧 spinner）。
-- selected：当前值行按 antd 选中态高亮。
+- selected：当前值行按 antd 选中态高亮，选中底同为 `#e6f4ff`（`--brand-bg`）（MANDATORY）。
 - empty：无匹配时的"无数据"回落 antd。
 
 ## Interaction Rules
@@ -29,12 +32,14 @@ antd `Select` 的可复用变体：展开面板带一行表头，每个选项渲
 - 组件本身不请求数据，选项由宿主传入。
 
 ## Visual Rules
-- 面板 `min-width`（默认 950px，MANDATORY 可配）：防止窄容器下旧内核把 grid 列压塌。
+- 面板 `min-width: 950px`（**MANDATORY**，design-tokens §4，非"可配"；props 默认必须 = 950）：防止窄容器下旧内核把 grid 列压塌。
+- 一级过滤器（选择项目）8 列固定宽 **`90/90/90/140/140/140/90/90`**（+末列 `1fr` 吸收剩余）、**8 列全部居中**（**MANDATORY**，design-tokens §4；原误列 Demo-Only，现纠正为强制）。
+- 截断规则（**MANDATORY**，design-tokens §4）：主机厂最多 3 中文字（`maxChars:3` → `maxWidth 42px`）、总成类别最多 5 字（`maxChars:5` → `maxWidth 70px`），超出用 **`text-overflow:clip` 直接截断、不显省略号**；其余文本列可用 `ellipsis`。
 - 覆盖 antd option 默认左右内距：`.mcs-panel .ant-select-item{padding-left:0;padding-right:0}`、`option-content{overflow:visible}`（MANDATORY：否则富单元格被裁切/错位）。
-- 文本截断：可选 `maxChars` + `truncate`：`clip`（硬截断无省略号，主机厂/类别用）或 `ellipsis`（默认）。
-- 进度条：轨道 `#eef0f3`，填充色由列 `progressColor` 决定（示例：自查 `#19C355`、复查 `#1677ff`），右侧百分比同色（MANDATORY 数字与条同色）。
-- 日期色阶（MANDATORY 阈值，可按需覆盖）：无日期=灰 `#eef0f3/rgba(0,0,0,0.45)`；剩余 ≤14 天=红 `#F44336`；≤30 天=琥珀 `#FFB300`；其余=蓝 `#1677ff`。
-- 字号 14px，数字 `tabular-nums`。
+- 迷你进度条高 **8px**（MANDATORY，design-tokens §4）：轨道 `#eef0f3`（`--track`），填充色由列 `progressColor` 决定且默认为令牌值（自查 `#19C355`=`--j-pass`、复查 `#1677ff`=`--brand`），右侧百分比同色（MANDATORY 数字与条同色）。
+- 冻结日期色阶（**MANDATORY 用令牌色**，阈值默认 14/30 天可覆盖）：无日期=灰底 `#eef0f3`（`--track`）+ 深字 `rgba(0,0,0,0.45)`（`--t3`）；到期（≤14 天）红 `#F44336`（`--j-fail`）；临期（≤30 天）琥珀 `#FFB300`（`--j-cond`）；其余蓝 `#1677ff`（`--brand`），字色 `#fff`（非令牌）。
+- 字号：单元格正文/表头 `14px`（`--f-body`）；日期标签与进度百分比 `12px`（`--f-aux`）。表头字重 `600`（`--fw-strong`）、色 `rgba(0,0,0,0.65)`（`--t2`）；日期标签字重 `600`（`--fw-strong`）。数字 `tabular-nums`。
+- 日期标签圆角 `4px`（`--r-small`）。表头底边线 `1px solid #f0f0f0`（`--line`）。
 
 ## Data Contract
 props：
@@ -45,19 +50,21 @@ props：
   - dateChip 列 cells 值 = `{ date: string, remaining: number|null }`
 - `columns`: `[{ key, label, width, align?, type?('text'|'progress'|'dateChip'), maxChars?, truncate?('clip'|'ellipsis'), progressColor?, format? }]`
 - 透传：`placeholder`、`loading`、`disabled`、`allowClear`（默认 true）、`showSearch`（默认 true）、`style`、`popupClassName`。
-- `panelMinWidth`（默认 950）、`freezeThresholds`（默认 `{ due:14, soon:30 }`）。
+- `panelMinWidth`（默认 **950**，MANDATORY=design-tokens §4，仅作覆盖入口、默认不得改）、`freezeThresholds`（默认 `{ due:14, soon:30 }`）。
 
 ## External Dependencies
 - 仅 antd `Select`（宜搭运行时已提供）。
 - 不内置数据获取 / 字段 ID / 后端接口 / Toast；combos 之类的构造属宿主数据层（见 ADAPTER）。
 
 ## Implementation Constraints
-- **Portal 样式作用域**：下拉面板 portal 到 `body`，在页面根 `.di-page` 令牌作用域之外 → CSS 变量不生效，**面板内颜色一律写字面值**（本 SPEC 内所有色值即字面值）。必须用 `popupClassName` 把 `.mcs-*` 限定在面板内（MANDATORY）。
+- **Portal 样式作用域**：下拉面板 portal 到 `body`；design-tokens 的 `:root` 令牌块全局可见，故面板内颜色一律写 `var(--token, 字面兜底)`（fallback 即本 SPEC 所标字面值，供无令牌环境兜底），禁止裸写死。必须用 `popupClassName` 把 `.mcs-*` 限定在面板内（MANDATORY）。
 - `popupMatchSelectWidth={false}` + 面板 `min-width`，否则面板被输入框宽度撑不满导致 grid 错乱。
 - 不改 antd 结构：仅用 `optionRender` / `dropdownRender` 定制。
 
 ## Demo-Only Properties
-- 示例列（冻结时间/主机厂/车型/类别/自查/复查/产品工程师/资深工程师）、示例数据、示例宽度 340、`90/90/90/140/140/140/90/90/1fr` 这一具体列宽组合——都可由 `columns` 改写。列"内容"不是规范，"表头与行共用 grid + min-width 防塌 + portal 字面色"才是。
+- 仅剩示例列的"内容"（列名与文案）、示例数据、示例收起宽度 340 可由 `columns`/`style` 改写。
+- 更正：`90/90/90/140/140/140/90/90` 列宽组合、8 列全居中、主机厂 3 字(42px)/总成 5 字(70px) `text-overflow:clip` 截断、容器 `min-width 950` 原误列为 Demo-Only，现按 design-tokens §4 一律为 **MANDATORY**，不得页面级改动。
+- 规范本体：表头与行共用 grid + §4 强制列宽/截断/min-width + 颜色一律 `var(--token, 兜底字面)`。
 
 ## Migration Rules
 - 原页 `cs-dd-wrap / cs-dd-head / cs-dd-row / cs-dd-*` → 泛化为 `mcs-*` + `columns/options` 配置。
