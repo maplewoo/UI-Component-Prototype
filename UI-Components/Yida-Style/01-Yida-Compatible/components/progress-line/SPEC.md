@@ -1,7 +1,7 @@
 # ProgressLine — SPEC
 
-## 0 · 令牌合规 Token Compliance（MANDATORY）
-本组件所有取色/尺寸/字号/字重/行高/圆角/阴影/层级一律引用 `../design-tokens.md` 定义的令牌变量，实现里写成 `var(--token, 兜底字面值)`，不得裸写死数值。凡 design-tokens 规定的值即本件强制默认值；props 仅作覆盖入口，默认必须等于令牌值，页面级随意改令牌值视为违规。宿主页面须先声明 design-tokens 的 :root 令牌块。下方各节 MANDATORY 项均已按令牌取值。
+## 0 · 令牌取值约定（Token Defaults）
+本组件取色/尺寸/字号/字重/行高/圆角/阴影/层级一律引用 `../design-tokens.md` 令牌，实现写成 `var(--token, 兜底字面值)`、不裸写死。凡令牌规定的值：组件暴露了覆盖入口（props 中有对应项）的一律标 `Default 按令牌`（默认值＝令牌值，可覆盖但页面别随意改）；仅无任何覆盖入口（没有选择）的结构性规则才标 `MANDATORY`。宿主页面须先声明 design-tokens 的 :root 令牌块。
 
 ## Purpose
 横向单行进度：`label` + 圆角条 + `value%`。
@@ -21,9 +21,9 @@
 - 无动画要求（可选平滑 width 过渡，属增强、非强制）。
 
 ## Visual Rules
-- 轨道 `height:14px; border-radius:99px; background:var(--track,#eef0f3); flex:1 1 auto`（MANDATORY：轨道 = 令牌 `--track`#eef0f3；胶囊圆角）。
-- 填充 `i`：`left:0;top:0;bottom:0; border-radius:99px; background:var(--pc,var(--j-pass,#19c355))`（MANDATORY：默认填充 = `--j-pass`#19c355，`color` 仅作覆盖入口）。
-- 百分比文字：`font-size:var(--f-title,20px); font-weight:var(--fw-strong,600); line-height:var(--lh-num,1.2); min-width:52px; text-align:right; color:var(--pc,var(--j-pass,#19c355))`（MANDATORY：完成率百分比放大 20 属 `--f-title`（§4），文字色与填充色同源，默认 `--j-pass`）。
+- 轨道 `height:14px; border-radius:99px; background:var(--track,#eef0f3); flex:1 1 auto`（height `Default 按令牌`：默认 14＝令牌值，可经 `height` 覆盖；轨道底色 `Default 按令牌`：默认 = 令牌 `--track`#eef0f3，可经 `trackColor` 覆盖；胶囊圆角 99px 无覆盖入口，MANDATORY）。
+- 填充 `i`：`left:0;top:0;bottom:0; border-radius:99px; background:var(--pc,var(--j-pass,#19c355))`（`Default 按令牌`：默认填充 = 令牌 `--j-pass`#19c355，可经 `color` 覆盖）。
+- 百分比文字：`font-size:var(--f-title,20px); font-weight:var(--fw-strong,600); line-height:var(--lh-num,1.2); min-width:52px; text-align:right; color:var(--pc,var(--j-pass,#19c355))`（MANDATORY：完成率百分比放大 20 属 `--f-title`（§4）、无覆盖入口；文字色与填充色同源 `--pc` 亦为结构规则；具体色值 `Default 按令牌`：默认 `--j-pass`#19c355，可经 `color` 覆盖）。
 - label `font-size:var(--f-body,14px); color:var(--t2,rgba(0,0,0,.65))`（MANDATORY）。
 - 行 `display:flex; align-items:center; gap:12px`。
 - 数字 `font-variant-numeric: tabular-nums`（MANDATORY）。
