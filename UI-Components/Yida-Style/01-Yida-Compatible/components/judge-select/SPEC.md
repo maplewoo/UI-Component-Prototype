@@ -1,5 +1,8 @@
 # JudgeSelect — SPEC
 
+## 0 · 令牌合规 Token Compliance（MANDATORY）
+本组件所有取色/尺寸/字号/字重/行高/圆角/阴影/层级一律引用 `../design-tokens.md` 定义的令牌变量，实现里写成 `var(--token, 兜底字面值)`，不得裸写死数值。凡 design-tokens 规定的值即本件强制默认值；props 仅作覆盖入口，默认必须等于令牌值，页面级随意改令牌值视为违规。宿主页面须先声明 design-tokens 的 :root 令牌块。下方各节 MANDATORY 项均已按令牌取值。
+
 ## Purpose
 色彩编码的单选下拉（可编辑）与其只读态（色块 pill）。选中值用背景/文字色直接表达语义状态。
 
@@ -23,12 +26,14 @@
 - 组件不发请求、不校验；校验/联动由宿主在 `onChange` 里做。
 
 ## Visual Rules
-- pill 尺寸 `112px × 28px`（宽度 MANDATORY 可配 `width`，默认 112；高 28px MANDATORY）。
-- 背景 = 选项 `color`，文字 = 选项 `textColor`；圆角 6px；字号 14px；居中（MANDATORY）。
+- pill 尺寸固定 `112px × 28px`（MANDATORY，见 design-tokens §4：判定块=图片上传按钮=附件按钮三者等大）。高 = `--h-ctrl`(28)；宽度 `width` prop 默认 112（覆盖入口，默认=令牌值）。
+- pill 底色一律取判定令牌（MANDATORY，design-tokens §2 判定状态单一来源）：待定 `--j-pending`(#eceff1，浅灰底、文字保持深色) / 通过 `--j-pass`(#19c355) / 带条件通过 `--j-cond`(#ffb300) / 不通过 `--j-fail`(#f44336) / 不适用 `--j-na`(#9e9e9e)；实现写成 `var(--j-*, #字面)`，禁止裸写死。
+- 背景 = 选项 `color`(=上述判定令牌)，文字 = 选项 `textColor`；圆角 `--r-ctrl`(6px)；字号 `--f-body`(14px)；居中（MANDATORY）。
 - 可编辑态右侧画一个小下拉箭头（`::after` 45° 双边框，取文字色，opacity .7）（MANDATORY：这是与只读态唯一视觉区别）。
-- 选项点 `optionRender`：色点 `8×8`、圆角 2px + 文字 gap 8（MANDATORY）。
+- hover / 选中底 `--brand-bg`(#e6f4ff)（MANDATORY）。
+- 选项点 `optionRender`：色点 `8×8`、圆角 2px + 文字 gap 8（MANDATORY），色点取该选项判定令牌（如待定点 `--j-pending-dot`#b0bec5）。
 - Select 原生 selector 去边框/阴影/背景、箭头隐藏，外观完全由 pill 承担（MANDATORY）。
-- 下拉面板（portal）：行高 ≥32、左右内距 10（MANDATORY，写在 popupClassName 作用域）。
+- 下拉面板（portal）：行高 ≥ `--h-ctrl-lg`(32)、左右内距 10（MANDATORY，写在 popupClassName 作用域）。
 
 ## Data Contract
 props：
@@ -49,7 +54,7 @@ props：
 - 不内置任何具体业务状态词与色值；示例（待定/通过/带条件通过/不通过/不适用 + 其配色）为 mock。
 
 ## Demo-Only Properties
-- 五档判定的具体文案与色值、`带条件通过→带条件` 的短写、112/28 之外的间距、示例 onChange 逻辑。
+- 五档判定的具体文案词（待定/通过/带条件通过/不通过/不适用）与 `带条件通过→带条件` 的短写、112/28 之外的一次性间距、示例 onChange 逻辑。注：判定色值本身由 design-tokens §2 规定，已升级 Visual Rules MANDATORY，不再属 Demo-Only。
 
 ## Migration Rules
 - 原页 `cs-jctl / cs-jctl-pop / cs-jctl-ro / cs-jface / cs-jdot` → 泛化类名 `judge-select* / judge-pill`。

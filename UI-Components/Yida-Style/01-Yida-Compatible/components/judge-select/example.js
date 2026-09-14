@@ -6,11 +6,11 @@ import { Select } from 'antd';
 function jsScope(cls, w) {
   return (
     <style>{`
-      .${cls} .ant-select-selector{border:none !important;box-shadow:none !important;background:transparent !important;padding:0 !important;height:28px;overflow:hidden;border-radius:6px;}
+      .${cls} .ant-select-selector{border:none !important;box-shadow:none !important;background:transparent !important;padding:0 !important;height:var(--h-ctrl,28px);overflow:hidden;border-radius:var(--r-ctrl,6px);}
       .${cls} .ant-select-arrow{display:none;}
-      .${cls} .js-face{width:${w}px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:6px;background:var(--jc,#ECEFF1);color:var(--jc-t,#fff);font-size:14px;position:relative;white-space:nowrap;overflow:hidden;font-variant-numeric:tabular-nums;}
+      .${cls} .js-face{width:${w}px;height:var(--h-ctrl,28px);display:flex;align-items:center;justify-content:center;border-radius:var(--r-ctrl,6px);background:var(--jc,var(--j-pending,#eceff1));color:var(--jc-t,#fff);font-size:var(--f-body,14px);position:relative;white-space:nowrap;overflow:hidden;font-variant-numeric:tabular-nums;}
       .${cls} .js-face::after{content:"";position:absolute;right:9px;top:50%;width:6px;height:6px;border-right:1.4px solid var(--jc-t,#fff);border-bottom:1.4px solid var(--jc-t,#fff);transform:translateY(-70%) rotate(45deg);opacity:.7;}
-      .js-pop .ant-select-item{min-height:32px;padding:5px 10px;display:flex;align-items:center;font-size:14px;font-weight:400;}
+      .js-pop .ant-select-item{min-height:var(--h-ctrl-lg,32px);padding:5px 10px;display:flex;align-items:center;font-size:var(--f-body,14px);font-weight:var(--fw-regular,400);}
       .js-pop .js-dot{width:8px;height:8px;border-radius:2px;flex:0 0 auto;}
     `}</style>
   );
@@ -25,7 +25,7 @@ function byValue(options, v) {
 function JudgePill(props) {
   var opt = byValue(props.options, props.value) || byValue(props.options, props.fallbackValue) || {};
   return (
-    <span className="js-pill" style={{ '--jc': opt.color || '#ECEFF1', '--jc-t': opt.textColor || '#fff', width: (props.width || 112), height: 28, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', borderRadius: 6, background: 'var(--jc)', color: 'var(--jc-t)', fontSize: 14, fontVariantNumeric: 'tabular-nums' }}>
+    <span className="js-pill" style={{ '--jc': opt.color || '#ECEFF1', '--jc-t': opt.textColor || '#fff', width: (props.width || 112), height: 'var(--h-ctrl,28px)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', borderRadius: 'var(--r-ctrl,6px)', background: 'var(--jc)', color: 'var(--jc-t)', fontSize: 'var(--f-body,14px)', fontVariantNumeric: 'tabular-nums' }}>
       {(opt.shortLabel || opt.label || props.value || '')}
     </span>
   );
