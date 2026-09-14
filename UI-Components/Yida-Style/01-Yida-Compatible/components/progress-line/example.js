@@ -3,10 +3,10 @@
 
 var plStyles = `
   .progress-line{display:flex;align-items:center;gap:12px;}
-  .progress-line .pl-label{font-size:14px;color:rgba(0,0,0,0.65);}
+  .progress-line .pl-label{font-size:var(--f-body,14px);color:var(--t2,rgba(0,0,0,.65));}
   .progress-line .pl-track{position:relative;flex:1 1 auto;height:14px;border-radius:99px;background:var(--track,#eef0f3);overflow:hidden;}
-  .progress-line .pl-track i{position:absolute;left:0;top:0;bottom:0;border-radius:99px;background:var(--pc,#19C355);}
-  .progress-line .pl-pct{font-size:20px;font-weight:600;line-height:1.2;color:var(--pc,#19C355);min-width:52px;text-align:right;font-variant-numeric:tabular-nums;}
+  .progress-line .pl-track i{position:absolute;left:0;top:0;bottom:0;border-radius:99px;background:var(--pc,var(--j-pass,#19c355));}
+  .progress-line .pl-pct{font-size:var(--f-title,20px);font-weight:var(--fw-strong,600);line-height:var(--lh-num,1.2);color:var(--pc,var(--j-pass,#19c355));min-width:52px;text-align:right;font-variant-numeric:tabular-nums;}
 `;
 
 function ProgressLine(props) {
