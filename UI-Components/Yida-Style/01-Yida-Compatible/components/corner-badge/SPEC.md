@@ -1,5 +1,8 @@
 # CornerBadge — SPEC
 
+## 0 · 令牌合规 Token Compliance（MANDATORY）
+本组件所有取色/尺寸/字号/字重/行高/圆角/阴影/层级一律引用 `../design-tokens.md` 定义的令牌变量，实现里写成 `var(--token, 兜底字面值)`，不得裸写死数值。凡 design-tokens 规定的值即本件强制默认值；props 仅作覆盖入口，默认必须等于令牌值，页面级随意改令牌值视为违规。宿主页面须先声明 design-tokens 的 :root 令牌块。下方各节 MANDATORY 项均已按令牌取值。
+
 ## Purpose
 在按钮上叠加一个数量提示，两种形态：`corner`（右上角红角标）与 `inline`（按钮文字后的半透明计数胶囊）。
 
@@ -19,9 +22,9 @@
 - 溢出：`count > max`（默认 99）显示 `{max}+`。
 
 ## Visual Rules
-- `corner`：`background:#F44336; color:#fff`，圆角胶囊 `border-radius:9px`，`min-width:18px;height:18px;padding:0 5px;font-size:12px;font-weight:500;line-height:18px;text-align:center`，绝对定位 `top:-8px;right:-8px; z-index:2; pointer-events:none`（MANDATORY）。
+- `corner`：`background:#F44336（--danger，=--j-fail）; color:#fff`（白字非令牌），圆角胶囊 `border-radius:9px`（=18px 高的一半成圆形，非独立令牌），`min-width:18px;height:18px;padding:0 5px;font-size:12px（--f-aux）;font-weight:500（--fw-medium）;line-height:18px;text-align:center`，绝对定位 `top:-8px;right:-8px; z-index:2; pointer-events:none`（MANDATORY，18×18 与 (-8,-8) 越出见 design-tokens §4）。
 - **无白圈/无描边**：角标为纯红底白字，不加 border/box-shadow 白环（MANDATORY 定稿规则）。
-- `inline`：`background:rgba(255,255,255,0.28); color:#fff`，`min-width:18px;height:18px;padding:0 5px;border-radius:9px;font-size:12px;font-weight:500;line-height:1;margin-left:6px;display:inline-flex;align-items:center;justify-content:center`（MANDATORY）。
+- `inline`：`background:rgba(255,255,255,0.28); color:#fff`——半透明白为定稿值，design-tokens 未定义（非令牌，保留字面），`min-width:18px;height:18px;padding:0 5px;border-radius:9px;font-size:12px（--f-aux）;font-weight:500（--fw-medium）;line-height:1;margin-left:6px;display:inline-flex;align-items:center;justify-content:center`（MANDATORY）。
 - 两态均 `font-variant-numeric: tabular-nums`（MANDATORY）。
 
 ## Data Contract（props）
@@ -41,7 +44,7 @@
 - 纯 CSS，不依赖 antd Badge 组件（避免平台 Badge 白圈/尺寸不可控）。
 
 ## Demo-Only Properties
-- 具体数字、按钮文案、示例色之外的展示排布。`#F44336`/`rgba(255,255,255,0.28)` 是定稿值，非 Demo。
+- 具体数字、按钮文案、示例色之外的展示排布。`#F44336` 即令牌 `--danger`（=`--j-fail`）；`rgba(255,255,255,0.28)` 为定稿值但非令牌（design-tokens 未定义，保留字面）。两者均非 Demo。
 
 ## Migration Rules
 - 原页 `cs-badge`→`variant=corner`，`cs-cnt-t`→`variant=inline`。
