@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>InlineJumpPagination 预览</title>
+<style>
+  body { margin: 0; padding: 32px; background: #f5f7fa;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; color: rgba(0,0,0,0.88); }
+  .cap { font-size: 12px; color: rgba(0,0,0,0.45); margin: 18px 0 6px; }
+  .box { background: #fff; border-radius: 8px; padding: 16px; max-width: 720px; }
+
+  /* ==== component（真实由宿主 .ijp-wrap 作用域 + antd 提供页码，这里静态复刻观感） ==== */
+  .ant-pagination { position: relative; display: flex; align-items: center; gap: 8px; list-style: none; padding: 0; margin: 12px 0 0; padding-right: 150px; font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; }
+  .ant-pagination li, .ant-pagination .pg-item { min-width: 28px; height: 28px; line-height: 26px; border: 1px solid #d9d9d9; border-radius: 6px; background: #fff; text-align: center; font-size: 14px; cursor: pointer; }
+  .ant-pagination .pg-active { border-color: #1677ff; color: #1677ff; font-weight: 600; }
+  .total { display: inline-flex; align-items: center; color: rgba(0,0,0,0.65); font-size: 14px; }
+  .ijp-jump { position: absolute; right: 0; top: 0; display: inline-flex; align-items: center; gap: 6px; height: 28px; line-height: 28px; font-size: 14px; color: rgba(0,0,0,0.65); }
+  .ijp-jump input { width: 48px; height: 28px; padding: 0 6px; text-align: center; border: 1px solid #d9d9d9; border-radius: 6px; font-variant-numeric: tabular-nums; font-family: inherit; }
+</style>
+</head>
+<body>
+  <p class="cap">常规：共 N 项 + 页码 + 右侧"跳至 __ 页"</p>
+  <div class="box">
+    <ul class="ant-pagination">
+      <span class="total">共 47 项</span>
+      <li class="pg-item">‹</li>
+      <li class="pg-item pg-active">1</li>
+      <li class="pg-item">2</li>
+      <li class="pg-item">3</li>
+      <li class="pg-item">4</li>
+      <li class="pg-item">5</li>
+      <li class="pg-item">›</li>
+      <span class="ijp-jump">跳至 <input value="3" /> 页</span>
+    </ul>
+  </div>
+
+  <p class="cap">total=0（隐藏跳页）</p>
+  <div class="box">
+    <ul class="ant-pagination"><span class="total">共 0 项</span></ul>
+  </div>
+</body>
+</html>
