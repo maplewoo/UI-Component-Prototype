@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SegmentedPill 预览</title>
+<style>
+  body { margin: 0; padding: 32px; background: #f5f7fa;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; }
+  .cap { font-size: 12px; color: rgba(0,0,0,0.45); margin: 18px 0 8px; }
+
+  /* ==== component ==== */
+  .seg-pill { position: relative; display: flex; width: 360px; max-width: 100%; padding: 4px; background: #eef0f3; border-radius: 10px; box-sizing: border-box; }
+  .seg-thumb { position: absolute; top: 4px; left: 4px; bottom: 4px; width: calc((100% - 8px)/2); background: var(--sc,#1677ff); border-radius: 6px; box-shadow: 0 1px 3px rgba(16,24,40,0.15); transform: translateX(0); transition: transform .28s cubic-bezier(.4,0,.2,1); z-index: 0; }
+  .seg-item { position: relative; z-index: 1; flex: 1 1 50%; text-align: center; border: 0; background: transparent; cursor: pointer; font-size: 16px; font-weight: 600; color: rgba(0,0,0,0.88); padding: 8px 12px; border-radius: 6px; transition: color .28s ease; white-space: nowrap; font-family: inherit; }
+  .seg-item.is-active { color: #fff; }
+  .seg-item.is-locked { color: rgba(0,0,0,0.25); cursor: not-allowed; }
+  .seg-pill :focus-visible { outline: 2px solid var(--sc,#1677ff); outline-offset: 2px; border-radius: 4px; }
+</style>
+</head>
+<body>
+  <p class="cap">默认：选中"视图A"（滑块在左）</p>
+  <div class="seg-pill"><span class="seg-thumb" style="transform:translateX(0)"></span>
+    <button class="seg-item is-active">视图A</button><button class="seg-item">视图B</button>
+  </div>
+
+  <p class="cap">选中"视图B"（滑块右移）</p>
+  <div class="seg-pill"><span class="seg-thumb" style="transform:translateX(100%)"></span>
+    <button class="seg-item">视图A</button><button class="seg-item is-active">视图B</button>
+  </div>
+
+  <p class="cap">另一段锁定（灰、不可点）</p>
+  <div class="seg-pill"><span class="seg-thumb" style="transform:translateX(0)"></span>
+    <button class="seg-item is-active">视图A</button><button class="seg-item is-locked">视图B</button>
+  </div>
+
+  <p class="cap">自定义主色（青）+ 三段（滑块宽 = (100%-8px)/3）</p>
+  <div class="seg-pill" style="--sc:#08979C"><span class="seg-thumb" style="width:calc((100% - 8px)/3);transform:translateX(200%)"></span>
+    <button class="seg-item">A</button><button class="seg-item">B</button><button class="seg-item is-active">C</button>
+  </div>
+</body>
+</html>
