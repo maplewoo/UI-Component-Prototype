@@ -2,16 +2,16 @@
 // 纯展示，无外部依赖。Mock 数据仅用于演示，接入真实页面见 ADAPTER.md。
 
 var kpiTileStyles = `
-  .kpi-tile{position:relative;overflow:hidden;flex:0 0 98px;width:98px;padding:10px 6px 8px;text-align:center;background:#fff;border:1px solid #f0f0f0;border-radius:8px;box-shadow:0 1px 2px rgba(16,24,40,0.04);}
+  .kpi-tile{position:relative;overflow:hidden;flex:0 0 98px;width:98px;padding:10px 6px 8px;text-align:center;background:#fff;border:1px solid var(--line,#f0f0f0);border-radius:var(--r-card,8px);box-shadow:var(--sh-card,0 1px 2px rgba(16,24,40,0.04));}
   .kpi-tile::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--kc,#ccc);}
-  .kpi-tile-label{display:block;font-size:12px;color:rgba(0,0,0,0.65);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .kpi-tile-value{display:block;font-size:16px;font-weight:600;line-height:1.3;letter-spacing:-.2px;color:var(--kc,rgba(0,0,0,0.88));font-variant-numeric:tabular-nums;}
+  .kpi-tile-label{display:block;font-size:var(--f-aux,12px);color:var(--t2,rgba(0,0,0,0.65));margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .kpi-tile-value{display:block;font-size:var(--f-sub,16px);font-weight:var(--fw-strong,600);line-height:var(--lh-heading,1.3);letter-spacing:-.2px;color:var(--kc,var(--t1,rgba(0,0,0,0.88)));font-variant-numeric:tabular-nums;}
 `;
 
 function KpiTile(props) {
   var label = props.label;
   var value = props.loading ? '—' : props.value;
-  var valueColor = props.loading ? 'rgba(0,0,0,0.25)' : undefined;
+  var valueColor = props.loading ? 'var(--t4,rgba(0,0,0,0.25))' : undefined;
   return (
     <div className="kpi-tile" style={{ '--kc': props.color || '' }}>
       <style>{kpiTileStyles}</style>
