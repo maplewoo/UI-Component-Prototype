@@ -1,17 +1,17 @@
 // InlineValidationHint — 宜搭兼容参考实现（YidaCodeCanvas / .canvas.jsx）
-// 纯展示；异步校验（AI/规则/必填）由宿主执行，仅回填 status/text。勾为内联 SVG，不引图标库。
+// 纯展示；异步校验（智能校验/规则/必填）由宿主执行，仅回填 status/text。勾为内联 SVG，不引图标库。
 
 var vhStyles = `
-  .vh-hint{display:inline-block;margin-top:4px;font-size:12px;line-height:1.5715;max-width:100%;white-space:normal;word-break:break-word;}
-  .vh-hint.vh-loading{color:#1677ff;}
-  .vh-hint.vh-info{color:rgba(0,0,0,0.45);}
-  .vh-hint.vh-pass{color:#19C355;}
-  .vh-hint.vh-fail,.vh-hint.vh-required{color:#F44336;}
+  .vh-hint{display:inline-block;margin-top:4px;font-size:var(--f-aux, 12px);line-height:var(--lh-body, 1.5715);max-width:100%;white-space:normal;word-break:break-word;}
+  .vh-hint.vh-loading{color:var(--brand, #1677ff);}
+  .vh-hint.vh-info{color:var(--t3, rgba(0,0,0,0.45));}
+  .vh-hint.vh-pass{color:var(--j-pass, #19c355);}
+  .vh-hint.vh-fail,.vh-hint.vh-required{color:var(--j-fail, #f44336);}
   .vh-hint svg{vertical-align:-1px;margin-right:2px;}
 `;
 
 function PassIcon() {
-  return <svg viewBox="0 0 12 12" width="11" height="11" fill="none" stroke="#19C355" strokeWidth="2"><path d="M2.5 6.5l2.5 2.5 4.5-5" /></svg>;
+  return <svg viewBox="0 0 12 12" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="2"><path d="M2.5 6.5l2.5 2.5 4.5-5" /></svg>;
 }
 
 function InlineValidationHint(props) {
