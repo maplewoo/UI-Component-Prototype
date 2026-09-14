@@ -1,5 +1,8 @@
 # InlineJumpPagination — SPEC
 
+## 0 · 令牌合规 Token Compliance（MANDATORY）
+本组件所有取色/尺寸/字号/字重/行高/圆角/阴影/层级一律引用 `../design-tokens.md` 定义的令牌变量，实现里写成 `var(--token, 兜底字面值)`，不得裸写死数值。凡 design-tokens 规定的值即本件强制默认值；props 仅作覆盖入口，默认必须等于令牌值，页面级随意改令牌值视为违规。宿主页面须先声明 design-tokens 的 :root 令牌块。下方各节 MANDATORY 项均已按令牌取值。
+
 ## Purpose
 返回 antd `Table` 可直接使用的 `pagination` 配置：常规页码 + `showTotal` 内嵌中文"共 N 项"与"跳至 [输入] 页"。
 
@@ -20,9 +23,11 @@
 - 组件不持有 `current`：受控，页由宿主维护。
 
 ## Visual Rules
-- 分页控件高 28（MANDATORY），页码/前后按钮 `line-height:26px; border-radius:6px`。
-- 跳页文字 `14px / rgba(0,0,0,0.65)`，输入 `width:48px;height:28px;text-align:center;font-variant-numeric:tabular-nums`（MANDATORY）。
-- 字体族回退 PingFang/YaHei 栈（MANDATORY：antd 分页箭头是 `button` 会带自身字体，需强制继承，否则中英文混排不齐）。
+- 分页控件高 28 = `--h-ctrl`（MANDATORY），页码/前后按钮圆角 6 = `--r-ctrl`（MANDATORY）。
+- 当前页文字 `--brand`（MANDATORY），浅底可配 `--brand-bg`。
+- 跳页文字 14 = `--f-body` / `--t2`（MANDATORY），字重 400 = `--fw-regular`；输入 `width:48px`、高 28 = `--h-ctrl`、`text-align:center`、`font-variant-numeric:tabular-nums`（MANDATORY）。
+- 字体族显式继承 PingFang/YaHei 栈（MANDATORY：antd 分页箭头是 `button` 会带自身字体，需强制继承，否则中英文混排不齐）。
+- 用词统一 "共 N 项 / 跳至 N 页"（MANDATORY：见 design-tokens §5 用词表，跨页一致，非可随意改文案）。
 - 全部样式作用在宿主页给表格包的外层类 `.ijp-wrap` 内（MANDATORY：不全局污染）。
 
 ## Data Contract
@@ -47,7 +52,7 @@
 - 跳页输入需受控 state（用 hook 内部 `useState`）。
 
 ## Demo-Only Properties
-- `150px` 让位宽度、`pageSize=10`、"共 N 项/跳至/页"具体文案（可 i18n 化，此处示例中文）。
+- `150px` 让位宽度、`pageSize=10`（数据/布局取值，非令牌）。"共 N 项 / 跳至 N 页"用词已移至 Visual Rules（§5 用词表 MANDATORY），不在此列。
 
 ## Migration Rules
 - 原页 `cs-jump / cs-jump-in / .checklist-inline-table .ant-pagination*` → `.ijp-wrap .ant-pagination* / ijp-jump / ijp-input`。
