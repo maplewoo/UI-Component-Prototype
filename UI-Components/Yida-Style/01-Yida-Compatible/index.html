@@ -5,75 +5,97 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Yida-Style 组件资产 · 统一预览</title>
 <style>
-  :root{
-    --brand:#1677ff; --brand-bg:#e6f4ff; --t1:rgba(0,0,0,.88); --t2:rgba(0,0,0,.65); --t3:rgba(0,0,0,.45);
-    --line:#f0f0f0; --page:#f2f3f5; --fill-hover:#f5f7fa; --r-card:8px; --r-ctrl:6px;
-    --sh-card:0 1px 2px rgba(16,24,40,.04);
-  }
-  *{box-sizing:border-box;}
-  body{margin:0;padding:28px 20px 48px;background:var(--page);color:var(--t1);font-variant-numeric:tabular-nums;
-    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;}
-  a{font-family:inherit;}
-  .wrap{max-width:1280px;margin:0 auto;}
-  header{margin-bottom:18px;}
-  h1{font-size:22px;font-weight:600;margin:0 0 4px;}
-  .sub{font-size:13px;color:var(--t3);margin:0;}
-  .sub a{color:var(--brand);text-decoration:none;}
-  .bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:16px 0 20px;}
-  .search{flex:1 1 240px;max-width:320px;height:34px;padding:0 12px;border:1px solid #d9d9d9;border-radius:var(--r-ctrl);
-    font-size:14px;background:#fff;outline:none;}
-  .search:focus{border-color:var(--brand);box-shadow:0 0 0 2px var(--brand-bg);}
-  .chips{display:flex;gap:8px;flex-wrap:wrap;}
-  .chip{height:30px;padding:0 14px;border:1px solid #d9d9d9;border-radius:99px;background:#fff;font-size:13px;color:var(--t2);
-    cursor:pointer;display:inline-flex;align-items:center;gap:6px;}
-  .chip:hover{background:var(--fill-hover);}
-  .chip.on{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:500;}
-  .count{font-size:13px;color:var(--t3);margin-left:auto;}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;align-items:start;}
-  .card{background:#fff;border:1px solid var(--line);border-radius:var(--r-card);box-shadow:var(--sh-card);
-    display:flex;flex-direction:column;overflow:hidden;}
-  .card-head{padding:12px 14px;border-bottom:1px solid var(--line);}
-  .titles{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
-  .en{font-size:15px;font-weight:600;}
-  .cn{font-size:13px;color:var(--t2);}
-  .tag{font-size:11px;font-weight:500;padding:1px 7px;border-radius:99px;}
-  .tag-cmp{background:var(--brand-bg);color:var(--brand);}
-  .tag-pat{background:#fff7e6;color:#d46b08;}
-  .use{margin:6px 0 0;font-size:12px;color:var(--t3);line-height:1.5;}
-  .prev{width:100%;border:0;background:#f5f7fa;display:block;}
-  .card-foot{display:flex;gap:16px;padding:8px 14px;border-top:1px solid var(--line);}
-  .card-foot a{font-size:12px;color:var(--brand);text-decoration:none;}
-  .card-foot a:hover{text-decoration:underline;}
-  .hide{display:none !important;}
-  @media (max-width:520px){ .grid{grid-template-columns:1fr;} }
+:root{--brand:#1677ff;--brand-hover:#69b1ff;--brand-bg:#e6f4ff;--brand-border:#91caff;--danger:#f44336;--success:#19c355;
+--j-pending-dot:#b0bec5;--j-cond:#ffb300;--j-na:#9e9e9e;--t1:rgba(0,0,0,.88);--t2:rgba(0,0,0,.65);--t3:rgba(0,0,0,.45);--t4:rgba(0,0,0,.25);
+--line:#f0f0f0;--line-strong:#d9d9d9;--page:#f2f3f5;--card:#fff;--fill-hover:#f5f7fa;--track:#eef0f3;--r-card:8px;--r-ctrl:6px;
+--sh-card:0 1px 2px rgba(16,24,40,.04);--sh-pop:0 6px 16px rgba(16,24,40,.14);--sh-full:0 8px 32px rgba(0,0,0,.20);}
+
+*{box-sizing:border-box;}
+body{margin:0;padding:28px 20px 56px;background:var(--page);color:var(--t1);font-variant-numeric:tabular-nums;
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;}
+.wrap{max-width:1280px;margin:0 auto;}
+header h1{font-size:22px;font-weight:600;margin:0 0 4px;}
+.sub{font-size:13px;color:var(--t3);margin:0;}
+.sub a{color:var(--brand);text-decoration:none;}
+.legend{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-card);box-shadow:var(--sh-card);padding:12px 14px;}
+.legend h3{margin:0 0 10px;font-size:13px;font-weight:600;color:var(--t2);}
+.swatches{display:flex;flex-wrap:wrap;gap:10px;}
+.sw{display:inline-flex;align-items:center;gap:8px;}
+.sw-dot{width:22px;height:22px;border-radius:6px;border:1px solid var(--line-strong);flex:0 0 auto;}
+.sw-t{display:flex;flex-direction:column;line-height:1.25;}
+.sw-t b{font-size:12px;font-weight:500;color:var(--t2);}
+.sw-t code{font-size:11px;color:var(--t3);font-family:ui-monospace,Menlo,Consolas,monospace;}
+.sw-t em{font-style:normal;font-size:11px;color:var(--t4);font-family:ui-monospace,Menlo,Consolas,monospace;}
+.toolbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:18px 0;padding:10px 0;background:var(--page);}
+.search-wrap{position:relative;flex:1 1 220px;max-width:340px;}
+.search{width:100%;height:34px;padding:0 30px 0 12px;border:1px solid var(--line-strong);border-radius:var(--r-ctrl);font-size:14px;background:var(--card);outline:none;color:var(--t1);font-family:inherit;}
+.search:focus{border-color:var(--brand);box-shadow:0 0 0 2px var(--brand-bg);}
+.s-clear{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:var(--t4);font-size:16px;cursor:pointer;line-height:1;display:none;}
+.chips{display:flex;gap:8px;flex-wrap:wrap;}
+.chip{height:30px;padding:0 14px;border:1px solid var(--line-strong);border-radius:99px;background:var(--card);font-size:13px;color:var(--t2);cursor:pointer;}
+.chip:hover{background:var(--fill-hover);}
+.chip.on{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:500;}
+.count{font-size:13px;color:var(--t3);margin-left:auto;}
+.section{margin-bottom:8px;}
+.section-title{font-size:15px;font-weight:600;color:var(--t2);margin:14px 2px 12px;display:flex;align-items:center;gap:8px;}
+.sec-cnt{font-size:12px;font-weight:500;color:var(--t3);background:var(--line);border-radius:99px;padding:1px 8px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;align-items:start;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-card);box-shadow:var(--sh-card);display:flex;flex-direction:column;overflow:hidden;transition:box-shadow .18s ease,transform .18s ease;}
+.card:hover{transform:translateY(-2px);box-shadow:var(--sh-pop);}
+.card--wide{grid-column:1 / -1;}
+.card-head{position:relative;padding:12px 14px;}
+.titles{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.en{font-size:15px;font-weight:600;}
+.cn{font-size:13px;color:var(--t2);}
+.tag{font-size:11px;font-weight:500;padding:1px 8px;border-radius:99px;border:1px solid transparent;}
+.tag-cmp{color:var(--brand);background:var(--brand-bg);border-color:#c3e2ff;}
+.tag-pat{color:#d46b08;background:#fff7e6;border-color:#ffe0b2;}
+.use{margin:6px 0 0;font-size:12px;color:var(--t3);line-height:1.5;padding-right:52px;}
+.zoom{position:absolute;top:12px;right:12px;height:24px;padding:0 10px;border:1px solid var(--line-strong);border-radius:99px;background:var(--card);color:var(--t2);font-size:12px;cursor:pointer;font-family:inherit;}
+.zoom:hover{color:var(--brand);border-color:var(--brand);}
+.prev-wrap{position:relative;border-top:1px solid var(--line);background:var(--page);}
+.prev-wrap iframe{width:100%;border:0;display:block;background:transparent;}
+.sk{position:absolute;inset:0;background:linear-gradient(90deg,#eef0f3 25%,#f6f7f9 37%,#eef0f3 63%);background-size:400% 100%;animation:sh 1.3s infinite;}
+@keyframes sh{0%{background-position:100% 0;}100%{background-position:0 0;}}
+.card-foot{display:flex;gap:16px;padding:8px 14px;border-top:1px solid var(--line);}
+.card-foot a{font-size:12px;color:var(--brand);text-decoration:none;}
+.card-foot a:hover{text-decoration:underline;}
+.hide{display:none !important;}
+.lb{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:1000;padding:24px;}
+.lb.on{display:flex;}
+.lb-box{background:var(--card);border-radius:var(--r-card);box-shadow:var(--sh-full);width:min(1100px,96vw);height:min(86vh,820px);display:flex;flex-direction:column;overflow:hidden;}
+.lb-head{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--line);font-weight:600;font-size:14px;}
+.lb-x{border:0;background:transparent;font-size:22px;line-height:1;cursor:pointer;color:var(--t2);}
+.lb-box iframe{flex:1 1 auto;width:100%;border:0;background:var(--page);}
+.totop{position:fixed;right:22px;bottom:22px;width:40px;height:40px;border-radius:50%;border:1px solid var(--line-strong);background:var(--card);color:var(--t2);font-size:18px;cursor:pointer;box-shadow:var(--sh-card);display:none;z-index:30;}
+.totop.on{display:block;}
+.totop:hover{color:var(--brand);border-color:var(--brand);}
+@media (max-width:520px){.grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
     <h1>Yida-Style 组件资产 · 统一预览</h1>
-    <p class="sub">共 <b>15</b> 个（组件 13 · 模式 2）· 源自 Checklist检查NEW 看板提取 · 配色/尺寸遵循 <a href="design-tokens.md">design-tokens</a></p>
+    <p class="sub">共 15 个（组件 13 · 模式 2） · 源自 Checklist检查NEW 看板提取 · 配色/尺寸遵循 <a href="design-tokens.md">design-tokens</a></p>
+    <div class="legend"><h3>设计令牌 · Design Tokens</h3><div class="swatches" id="swatches"><span class="sw"><span class="sw-dot" style="background:#1677ff"></span><span class="sw-t"><b>主色</b><code>var(--brand)</code><em>#1677ff</em></span></span><span class="sw"><span class="sw-dot" style="background:#69b1ff"></span><span class="sw-t"><b>主色悬停</b><code>var(--brand-hover)</code><em>#69b1ff</em></span></span><span class="sw"><span class="sw-dot" style="background:#e6f4ff"></span><span class="sw-t"><b>主色浅底</b><code>var(--brand-bg)</code><em>#e6f4ff</em></span></span><span class="sw"><span class="sw-dot" style="background:#91caff"></span><span class="sw-t"><b>主色描边</b><code>var(--brand-border)</code><em>#91caff</em></span></span><span class="sw"><span class="sw-dot" style="background:#f44336"></span><span class="sw-t"><b>危险/删除</b><code>var(--danger)</code><em>#f44336</em></span></span><span class="sw"><span class="sw-dot" style="background:#19c355"></span><span class="sw-t"><b>成功</b><code>var(--success)</code><em>#19c355</em></span></span><span class="sw"><span class="sw-dot" style="background:#b0bec5"></span><span class="sw-t"><b>待定·点</b><code>var(--j-pending-dot)</code><em>#b0bec5</em></span></span><span class="sw"><span class="sw-dot" style="background:#ffb300"></span><span class="sw-t"><b>带条件</b><code>var(--j-cond)</code><em>#ffb300</em></span></span><span class="sw"><span class="sw-dot" style="background:#9e9e9e"></span><span class="sw-t"><b>不适用</b><code>var(--j-na)</code><em>#9e9e9e</em></span></span><span class="sw"><span class="sw-dot" style="background:rgba(0,0,0,.88)"></span><span class="sw-t"><b>标题文字</b><code>var(--t1)</code><em>rgba(0,0,0,.88)</em></span></span><span class="sw"><span class="sw-dot" style="background:rgba(0,0,0,.65)"></span><span class="sw-t"><b>次级</b><code>var(--t2)</code><em>rgba(0,0,0,.65)</em></span></span><span class="sw"><span class="sw-dot" style="background:rgba(0,0,0,.45)"></span><span class="sw-t"><b>辅助</b><code>var(--t3)</code><em>rgba(0,0,0,.45)</em></span></span><span class="sw"><span class="sw-dot" style="background:rgba(0,0,0,.25)"></span><span class="sw-t"><b>占位禁用</b><code>var(--t4)</code><em>rgba(0,0,0,.25)</em></span></span><span class="sw"><span class="sw-dot" style="background:#f0f0f0"></span><span class="sw-t"><b>描边</b><code>var(--line)</code><em>#f0f0f0</em></span></span><span class="sw"><span class="sw-dot" style="background:#eef0f3"></span><span class="sw-t"><b>轨道</b><code>var(--track)</code><em>#eef0f3</em></span></span></div></div>
   </header>
-  <div class="bar">
-    <input id="q" class="search" placeholder="搜索组件名 / 用途…" />
-    <div class="chips">
-      <button class="chip on" data-f="all">全部</button>
-      <button class="chip" data-f="Component">组件 Component</button>
-      <button class="chip" data-f="Pattern">模式 Pattern</button>
-    </div>
+  <div class="toolbar">
+    <div class="search-wrap"><input id="q" class="search" placeholder="搜索组件名 / 用途…（按 / 聚焦）"/><button id="sclr" class="s-clear" title="清除">×</button></div>
+    <div class="chips"><button class="chip on" data-f="all">全部</button><button class="chip" data-f="Component">组件</button><button class="chip" data-f="Pattern">模式</button></div>
     <span class="count" id="count"></span>
   </div>
-  <div class="grid" id="grid">
-    <div class="card" data-type="Component" data-text="judgeselect 判定选择器 / 只读色块 带状态语义色的单选下拉 + 只读色块">
-      <div class="card-head">
-        <div class="titles">
-          <span class="en">JudgeSelect</span>
-          <span class="cn">判定选择器 / 只读色块</span>
-          <span class="tag tag-cmp">Component</span>
+  <div class="sections">
+    <div class="section" data-sec="Component">
+      <h2 class="section-title">组件 Component<span class="sec-cnt">13</span></h2>
+      <div class="grid">
+      <div class="card" data-type="Component" data-text="judgeselect 判定选择器 / 只读色块 带状态语义色的单选下拉 + 只读色块">
+        <div class="card-head">
+          <div class="titles"><span class="en">JudgeSelect</span><span class="cn">判定选择器 / 只读色块</span><span class="tag tag-cmp">Component</span></div>
+          <p class="use">带状态语义色的单选下拉 + 只读色块</p>
+          <button class="zoom" type="button" title="放大预览">放大</button>
         </div>
-        <p class="use">带状态语义色的单选下拉 + 只读色块</p>
-      </div>
-      <iframe class="prev" loading="lazy" style="height:320px" title="JudgeSelect preview" srcdoc="&lt;!doctype html&gt;
+        <div class="prev-wrap"><span class="sk"></span><iframe loading="lazy" style="height:320px" title="JudgeSelect preview" srcdoc="&lt;!doctype html&gt;
 &lt;html lang=&quot;zh-CN&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot; /&gt;
@@ -128,22 +150,16 @@
   &lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-"></iframe>
-      <div class="card-foot">
-        <a href="components/judge-select/SPEC.md" target="_blank" rel="noopener">SPEC</a>
-        <a href="components/judge-select/preview.html" target="_blank" rel="noopener">单独打开预览</a>
+"></iframe></div>
+        <div class="card-foot"><a href="components/judge-select/SPEC.md" target="_blank" rel="noopener">SPEC</a><a href="components/judge-select/preview.html" target="_blank" rel="noopener">单独打开预览</a></div>
       </div>
-    </div>
-    <div class="card" data-type="Component" data-text="segmentedpill 滑块式分段切换 滑动指示块的分段 tab，可选锁定态">
-      <div class="card-head">
-        <div class="titles">
-          <span class="en">SegmentedPill</span>
-          <span class="cn">滑块式分段切换</span>
-          <span class="tag tag-cmp">Component</span>
+      <div class="card" data-type="Component" data-text="segmentedpill 滑块式分段切换 滑动指示块的分段 tab，可选锁定态">
+        <div class="card-head">
+          <div class="titles"><span class="en">SegmentedPill</span><span class="cn">滑块式分段切换</span><span class="tag tag-cmp">Component</span></div>
+          <p class="use">滑动指示块的分段 Tab，可选锁定态</p>
+          <button class="zoom" type="button" title="放大预览">放大</button>
         </div>
-        <p class="use">滑动指示块的分段 Tab，可选锁定态</p>
-      </div>
-      <iframe class="prev" loading="lazy" style="height:320px" title="SegmentedPill preview" srcdoc="&lt;!doctype html&gt;
+        <div class="prev-wrap"><span class="sk"></span><iframe loading="lazy" style="height:320px" title="SegmentedPill preview" srcdoc="&lt;!doctype html&gt;
 &lt;html lang=&quot;zh-CN&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot; /&gt;
@@ -185,22 +201,16 @@
   &lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-"></iframe>
-      <div class="card-foot">
-        <a href="components/segmented-pill/SPEC.md" target="_blank" rel="noopener">SPEC</a>
-        <a href="components/segmented-pill/preview.html" target="_blank" rel="noopener">单独打开预览</a>
+"></iframe></div>
+        <div class="card-foot"><a href="components/segmented-pill/SPEC.md" target="_blank" rel="noopener">SPEC</a><a href="components/segmented-pill/preview.html" target="_blank" rel="noopener">单独打开预览</a></div>
       </div>
-    </div>
-    <div class="card" data-type="Component" data-text="statuspill 状态计数胶囊 色点+数字+标签的状态计数徽标">
-      <div class="card-head">
-        <div class="titles">
-          <span class="en">StatusPill</span>
-          <span class="cn">状态计数胶囊</span>
-          <span class="tag tag-cmp">Component</span>
+      <div class="card" data-type="Component" data-text="statuspill 状态计数胶囊 色点+数字+标签的状态计数徽标">
+        <div class="card-head">
+          <div class="titles"><span class="en">StatusPill</span><span class="cn">状态计数胶囊</span><span class="tag tag-cmp">Component</span></div>
+          <p class="use">色点+数字+标签的状态计数徽标</p>
+          <button class="zoom" type="button" title="放大预览">放大</button>
         </div>
-        <p class="use">色点+数字+标签的状态计数徽标</p>
-      </div>
-      <iframe class="prev" loading="lazy" style="height:320px" title="StatusPill preview" srcdoc="&lt;!doctype html&gt;
+        <div class="prev-wrap"><span class="sk"></span><iframe loading="lazy" style="height:320px" title="StatusPill preview" srcdoc="&lt;!doctype html&gt;
 &lt;html lang=&quot;zh-CN&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot; /&gt;
@@ -240,22 +250,16 @@
   &lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-"></iframe>
-      <div class="card-foot">
-        <a href="components/status-pill/SPEC.md" target="_blank" rel="noopener">SPEC</a>
-        <a href="components/status-pill/preview.html" target="_blank" rel="noopener">单独打开预览</a>
+"></iframe></div>
+        <div class="card-foot"><a href="components/status-pill/SPEC.md" target="_blank" rel="noopener">SPEC</a><a href="components/status-pill/preview.html" target="_blank" rel="noopener">单独打开预览</a></div>
       </div>
-    </div>
-    <div class="card" data-type="Component" data-text="progressline 完成率进度条 标签+圆角条+大号百分比的横向进度">
-      <div class="card-head">
-        <div class="titles">
-          <span class="en">ProgressLine</span>
-          <span class="cn">完成率进度条</span>
-          <span class="tag tag-cmp">Component</span>
+      <div class="card" data-type="Component" data-text="progressline 完成率进度条 标签+圆角条+大号百分比的横向进度">
+        <div class="card-head">
+          <div class="titles"><span class="en">ProgressLine</span><span class="cn">完成率进度条</span><span class="tag tag-cmp">Component</span></div>
+          <p class="use">标签+圆角条+大号百分比的横向进度</p>
+          <button class="zoom" type="button" title="放大预览">放大</button>
         </div>
-        <p class="use">标签+圆角条+大号百分比的横向进度</p>
-      </div>
-      <iframe class="prev" loading="lazy" style="height:320px" title="ProgressLine preview" srcdoc="&lt;!doctype html&gt;
+        <div class="prev-wrap"><span class="sk"></span><iframe loading="lazy" style="height:320px" title="ProgressLine preview" srcdoc="&lt;!doctype html&gt;
 &lt;html lang=&quot;zh-CN&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot; /&gt;
@@ -289,22 +293,16 @@
   &lt;div class=&quot;progress-line&quot; style=&quot;--pc:#19C355&quot;&gt;&lt;span class=&quot;pl-label&quot;&gt;细条&lt;/span&gt;&lt;span class=&quot;pl-track&quot; style=&quot;height:8px&quot;&gt;&lt;i style=&quot;width:64%&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span class=&quot;pl-pct&quot;&gt;64%&lt;/span&gt;&lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-"></iframe>
-      <div class="card-foot">
-        <a href="components/progress-line/SPEC.md" target="_blank" rel="noopener">SPEC</a>
-        <a href="components/progress-line/preview.html" target="_blank" rel="noopener">单独打开预览</a>
+"></iframe></div>
+        <div class="card-foot"><a href="components/progress-line/SPEC.md" target="_blank" rel="noopener">SPEC</a><a href="components/progress-line/preview.html" target="_blank" rel="noopener">单独打开预览</a></div>
       </div>
-    </div>
-    <div class="card" data-type="Component" data-text="kpitile 关键指标磁贴 顶部色条+标签+数值的迷你指标卡">
-      <div class="card-head">
-        <div class="titles">
-          <span class="en">KpiTile</span>
-          <span class="cn">关键指标磁贴</span>
-          <span class="tag tag-cmp">Component</span>
+      <div class="card" data-type="Component" data-text="kpitile 关键指标磁贴 顶部色条+标签+数值的迷你指标卡">
+        <div class="card-head">
+          <div class="titles"><span class="en">KpiTile</span><span class="cn">关键指标磁贴</span><span class="tag tag-cmp">Component</span></div>
+          <p class="use">顶部色条+标签+数值的迷你指标卡</p>
+          <button class="zoom" type="button" title="放大预览">放大</button>
         </div>
-        <p class="use">顶部色条+标签+数值的迷你指标卡</p>
-      </div>
-      <iframe class="prev" loading="lazy" style="height:320px" title="KpiTile preview" srcdoc="&lt;!doctype html&gt;
+        <div class="prev-wrap"><span class="sk"></span><iframe loading="lazy" style="height:320px" title="KpiTile preview" srcdoc="&lt;!doctype html&gt;
 &lt;html lang=&quot;zh-CN&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot; /&gt;
@@ -344,22 +342,16 @@
   &lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-"></iframe>
-      <div class="card-foot">
-        <a href="components/kpi-tile/SPEC.md" target="_blank" rel="noopener">SPEC</a>
-        <a href="components/kpi-tile/preview.html" target="_blank" rel="noopener">单独打开预览</a>
+"></iframe></div>
+        <div class="card-foot"><a href="components/kpi-tile/SPEC.md" target="_blank" rel="noopener">SPEC</a><a href="components/kpi-tile/preview.html" target="_blank" rel="noopener">单独打开预览</a></div>
       </div>
-    </div>
-    <div class="card" data-type="Component" data-text="cornerbadge 按钮角标 / 计数胶囊 按钮右上角红角标与按钮内计数胶囊">
-      <div class="card-head">
-        <div class="titles">
-          <span class="en">CornerBadge</span>
-          <span class="cn">按钮角标 / 计数胶囊</span>
-          <span class="tag tag-cmp">Component</span>
+      <div class="card" data-type="Component" data-text="cornerbadge 按钮角标 / 计数胶囊 按钮右上角红角标与按钮内计数胶囊">
+        <div class="card-head">
+          <div class="titles"><span class="en">CornerBadge</span><span class="cn">按钮角标 / 计数胶囊</span><span class="tag tag-cmp">Component</span></div>
+          <p class="use">按钮右上角红角标与按钮内计数胶囊</p>
+          <button class="zoom" type="button" title="放大预览">放大</button>
         </div>
-        <p class="use">按钮右上角红角标与按钮内计数胶囊</p>
-      </div>
-      <iframe class="prev" loading="lazy" style="height:320px" title="CornerBadge preview" srcdoc="&lt;!doctype html&gt;
+        <div class="prev-wrap"><span class="sk"></span><iframe loading="lazy" style="height:320px" title="CornerBadge preview" srcdoc="&lt;!doctype html&gt;
 &lt;html lang=&quot;zh-CN&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot; /&gt;
@@ -401,22 +393,16 @@
   &lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-"></iframe>
-      <div class="card-foot">
-        <a href="components/corner-badge/SPEC.md" target="_blank" rel="noopener">SPEC</a>
-        <a href="components/corner-badge/preview.html" target="_blank" rel="noopener">单独打开预览</a>
+"></iframe></div>
+        <div class="card-foot"><a href="components/corner-badge/SPEC.md" target="_blank" rel="noopener">SPEC</a><a href="components/corner-badge/preview.html" target="_blank" rel="noopener">单独打开预览</a></div>
       </div>
-    </div>
-    <div class="card" data-type="Component" data-text="dropdownfooter 多选下拉面板元素 自定义勾选框 + 底部计数/清空栏">
-      <div class="card-head">
-        <div class="titles">
-          <span class="en">DropdownFooter</span>
-          <span class="cn">多选下拉面板元素</span>
-          <span class="tag tag-cmp">Component</span>
+      <div class="card" data-type="Component" data-text="dropdownfooter 多选下拉面板元素 自定义勾选框 + 底部计数/清空栏">
+        <div class="card-head">
+          <div class="titles"><span class="en">DropdownFooter</span><span class="cn">多选下拉面板元素</span><span class="tag tag-cmp">Component</span></div>
+          <p class="use">自定义勾选框 + 底部计数/清空栏</p>
+          <button class="zoom" type="button" title="放大预览">放大</button>
         </div>
-        <p class="use">自定义勾选框 + 底部计数/清空栏</p>
-      </div>
-      <iframe class="prev" loading="lazy" style="height:320px" title="DropdownFooter preview" srcdoc="&lt;!doctype html&gt;
+        <div class="prev-wrap"><span class="sk"></span><iframe loading="lazy" style="height:320px" title="DropdownFooter preview" srcdoc="&lt;!doctype html&gt;
 &lt;html lang=&quot;zh-CN&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot; /&gt;
@@ -457,22 +443,16 @@
   &lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-"></iframe>
-      <div class="card-foot">
-        <a href="components/dropdown-footer/SPEC.md" target="_blank" rel="noopener">SPEC</a>
-        <a href="components/dropdown-footer/preview.html" target="_blank" rel="noopener">单独打开预览</a>
+"></iframe></div>
+        <div class="card-foot"><a href="components/dropdown-footer/SPEC.md" target="_blank" rel="noopener">SPEC</a><a href="components/dropdown-footer/preview.html" target="_blank" rel="noopener">单独打开预览</a></div>
       </div>
-    </div>
-    <div class="card" data-type="Component" data-text="keywordtagsearch 关键词标签搜索框 回车加词+历史+任一/全部模式筛选框">
-      <div class="card-head">
-        <div class="titles">
-          <span class="en">KeywordTagSearch</span>
-          <span class="cn">关键词标签搜索框</span>
-          <span class="tag tag-cmp">Component</span>
+      <div class="card" data-type="Component" data-text="keywordtagsearch 关键词标签搜索框 回车加词+历史+任一/全部模式筛选框">
+        <div class="card-head">
+          <div class="titles"><span class="en">KeywordTagSearch</span><span class="cn">关键词标签搜索框</span><span class="tag tag-cmp">Component</span></div>
+          <p class="use">回车加词+历史+任一/全部模式筛选框</p>
+          <button class="zoom" type="button" title="放大预览">放大</button>
         </div>
-        <p class="use">回车加词+历史+任一/全部模式筛选框</p>
-      </div>
-      <iframe class="prev" loading="lazy" style="height:320px" title="KeywordTagSearch preview" srcdoc="&lt;!doctype html&gt;
+        <div class="prev-wrap"><span class="sk"></span><iframe loading="lazy" style="height:320px" title="KeywordTagSearch preview" srcdoc="&lt;!doctype html&gt;
 &lt;html lang=&quot;zh-CN&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot; /&gt;
@@ -519,22 +499,16 @@
   &lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-"></iframe>
-      <div class="card-foot">
-        <a href="components/keyword-tag-search/SPEC.md" target="_blank" rel="noopener">SPEC</a>
-        <a href="components/keyword-tag-search/preview.html" target="_blank" rel="noopener">单独打开预览</a>
+"></iframe></div>
+        <div class="card-foot"><a href="components/keyword-tag-search/SPEC.md" target="_blank" rel="noopener">SPEC</a><a href="components/keyword-tag-search/preview.html" target="_blank" rel="noopener">单独打开预览</a></div>
       </div>
-    </div>
-    <div class="card" data-type="Component" data-text="statusfilterselect 带色点多选筛选 状态色点+勾选+彩色tag的多选筛选下拉">
-      <div class="card-head">
-        <div class="titles">
-          <span class="en">StatusFilterSelect</span>
-          <span class="cn">带色点多选筛选</span>
-          <span class="tag tag-cmp">Component</span>
+      <div class="card" data-type="Component" data-text="statusfilterselect 带色点多选筛选 状态色点+勾选+灰底tag的多选筛选下拉">
+        <div class="card-head">
+          <div class="titles"><span class="en">StatusFilterSelect</span><span class="cn">带色点多选筛选</span><span class="tag tag-cmp">Component</span></div>
+          <p class="use">状态色点+勾选+灰底tag的多选筛选下拉</p>
+          <button class="zoom" type="button" title="放大预览">放大</button>
         </div>
-        <p class="use">状态色点+勾选+彩色tag的多选筛选下拉</p>
-      </div>
-      <iframe class="prev" loading="lazy" style="height:320px" title="StatusFilterSelect preview" srcdoc="&lt;!doctype html&gt;
+        <div class="prev-wrap"><span class="sk"></span><iframe loading="lazy" style="height:320px" title="StatusFilterSelect preview" srcdoc="&lt;!doctype html&gt;
 &lt;html lang=&quot;zh-CN&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot; /&gt;
@@ -584,98 +558,16 @@
   &lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-"></iframe>
-      <div class="card-foot">
-        <a href="components/status-filter-select/SPEC.md" target="_blank" rel="noopener">SPEC</a>
-        <a href="components/status-filter-select/preview.html" target="_blank" rel="noopener">单独打开预览</a>
+"></iframe></div>
+        <div class="card-foot"><a href="components/status-filter-select/SPEC.md" target="_blank" rel="noopener">SPEC</a><a href="components/status-filter-select/preview.html" target="_blank" rel="noopener">单独打开预览</a></div>
       </div>
-    </div>
-    <div class="card" data-type="Pattern" data-text="judgesummarycard 判定统计卡 完成率条 + 状态计数徽标组合概览卡">
-      <div class="card-head">
-        <div class="titles">
-          <span class="en">JudgeSummaryCard</span>
-          <span class="cn">判定统计卡</span>
-          <span class="tag tag-pat">Pattern</span>
+      <div class="card" data-type="Component" data-text="attachmentchip 附件状态上传按钮 单文件附件五态合一(空/中/已/前/只读)">
+        <div class="card-head">
+          <div class="titles"><span class="en">AttachmentChip</span><span class="cn">附件状态上传按钮</span><span class="tag tag-cmp">Component</span></div>
+          <p class="use">单文件附件五态合一(空/中/已/前/只读)</p>
+          <button class="zoom" type="button" title="放大预览">放大</button>
         </div>
-        <p class="use">完成率条 + 状态计数徽标组合概览卡</p>
-      </div>
-      <iframe class="prev" loading="lazy" style="height:320px" title="JudgeSummaryCard preview" srcdoc="&lt;!doctype html&gt;
-&lt;html lang=&quot;zh-CN&quot;&gt;
-&lt;head&gt;
-&lt;meta charset=&quot;utf-8&quot; /&gt;
-&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot; /&gt;
-&lt;title&gt;JudgeSummaryCard 预览&lt;/title&gt;
-&lt;style&gt;
-  :root{ --brand:#1677ff; --j-pending:#eceff1; --j-pending-dot:#b0bec5; --j-pass:#19c355; --j-cond:#ffb300; --j-fail:#f44336; --j-na:#9e9e9e;
-    --line:#f0f0f0; --head-bg:#fafbfc; --track:#eef0f3; --t1:rgba(0,0,0,.88); --t3:rgba(0,0,0,.45); --r-card:8px; }
-  body { margin: 0; padding: 32px; background: #f2f3f5;
-    font-family: -apple-system, BlinkMacSystemFont, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, sans-serif; font-variant-numeric: tabular-nums; }
-  .grid { display: flex; gap: 16px; flex-wrap: wrap; }
-
-  /* ==== card ==== */
-  .jc-card { flex: 1 1 420px; min-width: 360px; background: #fff; border: 1px solid var(--line); border-radius: var(--r-card); box-shadow: 0 1px 2px rgba(16,24,40,.04); }
-  .jc-head { display: flex; align-items: center; justify-content: space-between; min-height: 40px; padding: 8px 16px; background: var(--head-bg); border-bottom: 1px solid var(--line); }
-  .jc-title { font-size: 16px; font-weight: 600; color: var(--t1); }
-  .jc-total { font-size: 12px; color: var(--t3); }
-  .jc-body { padding: 12px 16px; }
-  /* progress-line (C4) */
-  .pl { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
-  .pl-label { font-size: 14px; color: var(--t1); }
-  .pl-track { position: relative; flex: 1 1 auto; height: 14px; border-radius: 99px; background: var(--track); overflow: hidden; }
-  .pl-track i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 99px; background: var(--pc, var(--j-pass)); }
-  .pl-pct { font-size: 20px; font-weight: 600; color: var(--pc, var(--j-pass)); min-width: 52px; text-align: right; }
-  /* status-pill row (C3) */
-  .pills { display: flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap; overflow-x: auto; }
-  .pill { display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border: 1px solid var(--line); border-radius: 13px; background: #fff; }
-  .pill .dot { width: 8px; height: 8px; border-radius: 50%; }
-  .pill .n { font-weight: 600; color: var(--t1); }
-  .pill .lab { font-size: 12px; color: var(--t3); }
-&lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;div class=&quot;grid&quot;&gt;
-    &lt;div class=&quot;jc-card&quot;&gt;
-      &lt;div class=&quot;jc-head&quot;&gt;&lt;span class=&quot;jc-title&quot;&gt;自查判定&lt;/span&gt;&lt;span class=&quot;jc-total&quot;&gt;共 47 项&lt;/span&gt;&lt;/div&gt;
-      &lt;div class=&quot;jc-body&quot;&gt;
-        &lt;div class=&quot;pl&quot; style=&quot;--pc:var(--j-pass)&quot;&gt;&lt;span class=&quot;pl-label&quot;&gt;完成率&lt;/span&gt;&lt;span class=&quot;pl-track&quot;&gt;&lt;i style=&quot;width:74%&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span class=&quot;pl-pct&quot;&gt;74%&lt;/span&gt;&lt;/div&gt;
-        &lt;div class=&quot;pills&quot;&gt;
-          &lt;span class=&quot;pill&quot;&gt;&lt;i class=&quot;dot&quot; style=&quot;background:var(--j-pending-dot)&quot;&gt;&lt;/i&gt;&lt;b class=&quot;n&quot;&gt;5&lt;/b&gt;&lt;span class=&quot;lab&quot;&gt;待定&lt;/span&gt;&lt;/span&gt;
-          &lt;span class=&quot;pill&quot;&gt;&lt;i class=&quot;dot&quot; style=&quot;background:var(--j-pass)&quot;&gt;&lt;/i&gt;&lt;b class=&quot;n&quot;&gt;34&lt;/b&gt;&lt;span class=&quot;lab&quot;&gt;通过&lt;/span&gt;&lt;/span&gt;
-          &lt;span class=&quot;pill&quot;&gt;&lt;i class=&quot;dot&quot; style=&quot;background:var(--j-cond)&quot;&gt;&lt;/i&gt;&lt;b class=&quot;n&quot;&gt;2&lt;/b&gt;&lt;span class=&quot;lab&quot;&gt;带条件&lt;/span&gt;&lt;/span&gt;
-          &lt;span class=&quot;pill&quot;&gt;&lt;i class=&quot;dot&quot; style=&quot;background:var(--j-fail)&quot;&gt;&lt;/i&gt;&lt;b class=&quot;n&quot;&gt;1&lt;/b&gt;&lt;span class=&quot;lab&quot;&gt;不通过&lt;/span&gt;&lt;/span&gt;
-          &lt;span class=&quot;pill&quot;&gt;&lt;i class=&quot;dot&quot; style=&quot;background:var(--j-na)&quot;&gt;&lt;/i&gt;&lt;b class=&quot;n&quot;&gt;5&lt;/b&gt;&lt;span class=&quot;lab&quot;&gt;不适用&lt;/span&gt;&lt;/span&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class=&quot;jc-card&quot;&gt;
-      &lt;div class=&quot;jc-head&quot;&gt;&lt;span class=&quot;jc-title&quot;&gt;复查判定&lt;/span&gt;&lt;span class=&quot;jc-total&quot;&gt;共 47 项&lt;/span&gt;&lt;/div&gt;
-      &lt;div class=&quot;jc-body&quot;&gt;
-        &lt;div class=&quot;pl&quot; style=&quot;--pc:var(--brand)&quot;&gt;&lt;span class=&quot;pl-label&quot;&gt;完成率&lt;/span&gt;&lt;span class=&quot;pl-track&quot;&gt;&lt;i style=&quot;width:40%&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span class=&quot;pl-pct&quot;&gt;40%&lt;/span&gt;&lt;/div&gt;
-        &lt;div class=&quot;pills&quot;&gt;
-          &lt;span class=&quot;pill&quot;&gt;&lt;i class=&quot;dot&quot; style=&quot;background:var(--j-pending-dot)&quot;&gt;&lt;/i&gt;&lt;b class=&quot;n&quot;&gt;28&lt;/b&gt;&lt;span class=&quot;lab&quot;&gt;待定&lt;/span&gt;&lt;/span&gt;
-          &lt;span class=&quot;pill&quot;&gt;&lt;i class=&quot;dot&quot; style=&quot;background:var(--j-pass)&quot;&gt;&lt;/i&gt;&lt;b class=&quot;n&quot;&gt;19&lt;/b&gt;&lt;span class=&quot;lab&quot;&gt;通过&lt;/span&gt;&lt;/span&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-"></iframe>
-      <div class="card-foot">
-        <a href="components/judge-summary-card/SPEC.md" target="_blank" rel="noopener">SPEC</a>
-        <a href="components/judge-summary-card/preview.html" target="_blank" rel="noopener">单独打开预览</a>
-      </div>
-    </div>
-    <div class="card" data-type="Component" data-text="attachmentchip 附件状态上传按钮 单文件附件五态合一按钮(空/中/已/前/只读)">
-      <div class="card-head">
-        <div class="titles">
-          <span class="en">AttachmentChip</span>
-          <span class="cn">附件状态上传按钮</span>
-          <span class="tag tag-cmp">Component</span>
-        </div>
-        <p class="use">单文件附件五态合一按钮(空/中/已/前/只读)</p>
-      </div>
-      <iframe class="prev" loading="lazy" style="height:320px" title="AttachmentChip preview" srcdoc="&lt;!doctype html&gt;
+        <div class="prev-wrap"><span class="sk"></span><iframe loading="lazy" style="height:320px" title="AttachmentChip preview" srcdoc="&lt;!doctype html&gt;
 &lt;html lang=&quot;zh-CN&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot; /&gt;
@@ -720,22 +612,16 @@
   &lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-"></iframe>
-      <div class="card-foot">
-        <a href="components/attachment-chip/SPEC.md" target="_blank" rel="noopener">SPEC</a>
-        <a href="components/attachment-chip/preview.html" target="_blank" rel="noopener">单独打开预览</a>
+"></iframe></div>
+        <div class="card-foot"><a href="components/attachment-chip/SPEC.md" target="_blank" rel="noopener">SPEC</a><a href="components/attachment-chip/preview.html" target="_blank" rel="noopener">单独打开预览</a></div>
       </div>
-    </div>
-    <div class="card" data-type="Component" data-text="imagepasteuploader 粘贴图片上传单元 ctrl+v 连贴 + 缩略图删除 + 预览的锚定盒">
-      <div class="card-head">
-        <div class="titles">
-          <span class="en">ImagePasteUploader</span>
-          <span class="cn">粘贴图片上传单元</span>
-          <span class="tag tag-cmp">Component</span>
+      <div class="card" data-type="Component" data-text="imagepasteuploader 粘贴图片上传单元 ctrl+v 连贴 + 缩略图删除 + 预览锚定盒">
+        <div class="card-head">
+          <div class="titles"><span class="en">ImagePasteUploader</span><span class="cn">粘贴图片上传单元</span><span class="tag tag-cmp">Component</span></div>
+          <p class="use">Ctrl+V 连贴 + 缩略图删除 + 预览锚定盒</p>
+          <button class="zoom" type="button" title="放大预览">放大</button>
         </div>
-        <p class="use">Ctrl+V 连贴 + 缩略图删除 + 预览的锚定盒</p>
-      </div>
-      <iframe class="prev" loading="lazy" style="height:320px" title="ImagePasteUploader preview" srcdoc="&lt;!doctype html&gt;
+        <div class="prev-wrap"><span class="sk"></span><iframe loading="lazy" style="height:320px" title="ImagePasteUploader preview" srcdoc="&lt;!doctype html&gt;
 &lt;html lang=&quot;zh-CN&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot; /&gt;
@@ -790,22 +676,16 @@
   &lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-"></iframe>
-      <div class="card-foot">
-        <a href="components/image-paste-uploader/SPEC.md" target="_blank" rel="noopener">SPEC</a>
-        <a href="components/image-paste-uploader/preview.html" target="_blank" rel="noopener">单独打开预览</a>
+"></iframe></div>
+        <div class="card-foot"><a href="components/image-paste-uploader/SPEC.md" target="_blank" rel="noopener">SPEC</a><a href="components/image-paste-uploader/preview.html" target="_blank" rel="noopener">单独打开预览</a></div>
       </div>
-    </div>
-    <div class="card" data-type="Component" data-text="inlinevalidationhint 行内校验提示 字段下方异步校验彩色状态行">
-      <div class="card-head">
-        <div class="titles">
-          <span class="en">InlineValidationHint</span>
-          <span class="cn">行内校验提示</span>
-          <span class="tag tag-cmp">Component</span>
+      <div class="card" data-type="Component" data-text="inlinevalidationhint 行内校验提示 字段下方异步校验彩色状态行">
+        <div class="card-head">
+          <div class="titles"><span class="en">InlineValidationHint</span><span class="cn">行内校验提示</span><span class="tag tag-cmp">Component</span></div>
+          <p class="use">字段下方异步校验彩色状态行</p>
+          <button class="zoom" type="button" title="放大预览">放大</button>
         </div>
-        <p class="use">字段下方异步校验彩色状态行</p>
-      </div>
-      <iframe class="prev" loading="lazy" style="height:320px" title="InlineValidationHint preview" srcdoc="&lt;!doctype html&gt;
+        <div class="prev-wrap"><span class="sk"></span><iframe loading="lazy" style="height:320px" title="InlineValidationHint preview" srcdoc="&lt;!doctype html&gt;
 &lt;html lang=&quot;zh-CN&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot; /&gt;
@@ -850,22 +730,16 @@
     &lt;span class=&quot;vh-hint vh-info&quot;&gt;智能校验暂不可用，请人工确认&lt;/span&gt;&lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-"></iframe>
-      <div class="card-foot">
-        <a href="components/inline-validation-hint/SPEC.md" target="_blank" rel="noopener">SPEC</a>
-        <a href="components/inline-validation-hint/preview.html" target="_blank" rel="noopener">单独打开预览</a>
+"></iframe></div>
+        <div class="card-foot"><a href="components/inline-validation-hint/SPEC.md" target="_blank" rel="noopener">SPEC</a><a href="components/inline-validation-hint/preview.html" target="_blank" rel="noopener">单独打开预览</a></div>
       </div>
-    </div>
-    <div class="card" data-type="Component" data-text="multicolumnselect 多列表格下拉 带表头的多列富单元格下拉选择器(950)" style="grid-column:1 / -1;">
-      <div class="card-head">
-        <div class="titles">
-          <span class="en">MultiColumnSelect</span>
-          <span class="cn">多列表格下拉</span>
-          <span class="tag tag-cmp">Component</span>
+      <div class="card card--wide" data-type="Component" data-text="multicolumnselect 多列表格下拉 带表头的多列富单元格下拉选择器(950)">
+        <div class="card-head">
+          <div class="titles"><span class="en">MultiColumnSelect</span><span class="cn">多列表格下拉</span><span class="tag tag-cmp">Component</span></div>
+          <p class="use">带表头的多列富单元格下拉选择器(950)</p>
+          <button class="zoom" type="button" title="放大预览">放大</button>
         </div>
-        <p class="use">带表头的多列富单元格下拉选择器(950)</p>
-      </div>
-      <iframe class="prev" loading="lazy" style="height:420px" title="MultiColumnSelect preview" srcdoc="&lt;!doctype html&gt;
+        <div class="prev-wrap"><span class="sk"></span><iframe loading="lazy" style="height:440px" title="MultiColumnSelect preview" srcdoc="&lt;!doctype html&gt;
 &lt;html lang=&quot;zh-CN&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot; /&gt;
@@ -938,22 +812,91 @@
   &lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-"></iframe>
-      <div class="card-foot">
-        <a href="components/multi-column-select/SPEC.md" target="_blank" rel="noopener">SPEC</a>
-        <a href="components/multi-column-select/preview.html" target="_blank" rel="noopener">单独打开预览</a>
+"></iframe></div>
+        <div class="card-foot"><a href="components/multi-column-select/SPEC.md" target="_blank" rel="noopener">SPEC</a><a href="components/multi-column-select/preview.html" target="_blank" rel="noopener">单独打开预览</a></div>
+      </div>
       </div>
     </div>
-    <div class="card" data-type="Pattern" data-text="fullscreeneditcard 全屏编辑卡片 fixed铺满+esc+锁滚动+复位吸顶的卡壳" style="grid-column:1 / -1;">
-      <div class="card-head">
-        <div class="titles">
-          <span class="en">FullscreenEditCard</span>
-          <span class="cn">全屏编辑卡片</span>
-          <span class="tag tag-pat">Pattern</span>
+    <div class="section" data-sec="Pattern">
+      <h2 class="section-title">模式 Pattern<span class="sec-cnt">2</span></h2>
+      <div class="grid">
+      <div class="card" data-type="Pattern" data-text="judgesummarycard 判定统计卡 完成率条 + 状态计数徽标组合概览卡">
+        <div class="card-head">
+          <div class="titles"><span class="en">JudgeSummaryCard</span><span class="cn">判定统计卡</span><span class="tag tag-pat">Pattern</span></div>
+          <p class="use">完成率条 + 状态计数徽标组合概览卡</p>
+          <button class="zoom" type="button" title="放大预览">放大</button>
         </div>
-        <p class="use">fixed铺满+Esc+锁滚动+复位吸顶的卡壳</p>
+        <div class="prev-wrap"><span class="sk"></span><iframe loading="lazy" style="height:320px" title="JudgeSummaryCard preview" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;zh-CN&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot; /&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot; /&gt;
+&lt;title&gt;JudgeSummaryCard 预览&lt;/title&gt;
+&lt;style&gt;
+  :root{ --brand:#1677ff; --j-pending:#eceff1; --j-pending-dot:#b0bec5; --j-pass:#19c355; --j-cond:#ffb300; --j-fail:#f44336; --j-na:#9e9e9e;
+    --line:#f0f0f0; --head-bg:#fafbfc; --track:#eef0f3; --t1:rgba(0,0,0,.88); --t3:rgba(0,0,0,.45); --r-card:8px; }
+  body { margin: 0; padding: 32px; background: #f2f3f5;
+    font-family: -apple-system, BlinkMacSystemFont, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, sans-serif; font-variant-numeric: tabular-nums; }
+  .grid { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  /* ==== card ==== */
+  .jc-card { flex: 1 1 420px; min-width: 360px; background: #fff; border: 1px solid var(--line); border-radius: var(--r-card); box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  .jc-head { display: flex; align-items: center; justify-content: space-between; min-height: 40px; padding: 8px 16px; background: var(--head-bg); border-bottom: 1px solid var(--line); }
+  .jc-title { font-size: 16px; font-weight: 600; color: var(--t1); }
+  .jc-total { font-size: 12px; color: var(--t3); }
+  .jc-body { padding: 12px 16px; }
+  /* progress-line (C4) */
+  .pl { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .pl-label { font-size: 14px; color: var(--t1); }
+  .pl-track { position: relative; flex: 1 1 auto; height: 14px; border-radius: 99px; background: var(--track); overflow: hidden; }
+  .pl-track i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 99px; background: var(--pc, var(--j-pass)); }
+  .pl-pct { font-size: 20px; font-weight: 600; color: var(--pc, var(--j-pass)); min-width: 52px; text-align: right; }
+  /* status-pill row (C3) */
+  .pills { display: flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap; overflow-x: auto; }
+  .pill { display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border: 1px solid var(--line); border-radius: 13px; background: #fff; }
+  .pill .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .pill .n { font-weight: 600; color: var(--t1); }
+  .pill .lab { font-size: 12px; color: var(--t3); }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class=&quot;grid&quot;&gt;
+    &lt;div class=&quot;jc-card&quot;&gt;
+      &lt;div class=&quot;jc-head&quot;&gt;&lt;span class=&quot;jc-title&quot;&gt;自查判定&lt;/span&gt;&lt;span class=&quot;jc-total&quot;&gt;共 47 项&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;jc-body&quot;&gt;
+        &lt;div class=&quot;pl&quot; style=&quot;--pc:var(--j-pass)&quot;&gt;&lt;span class=&quot;pl-label&quot;&gt;完成率&lt;/span&gt;&lt;span class=&quot;pl-track&quot;&gt;&lt;i style=&quot;width:74%&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span class=&quot;pl-pct&quot;&gt;74%&lt;/span&gt;&lt;/div&gt;
+        &lt;div class=&quot;pills&quot;&gt;
+          &lt;span class=&quot;pill&quot;&gt;&lt;i class=&quot;dot&quot; style=&quot;background:var(--j-pending-dot)&quot;&gt;&lt;/i&gt;&lt;b class=&quot;n&quot;&gt;5&lt;/b&gt;&lt;span class=&quot;lab&quot;&gt;待定&lt;/span&gt;&lt;/span&gt;
+          &lt;span class=&quot;pill&quot;&gt;&lt;i class=&quot;dot&quot; style=&quot;background:var(--j-pass)&quot;&gt;&lt;/i&gt;&lt;b class=&quot;n&quot;&gt;34&lt;/b&gt;&lt;span class=&quot;lab&quot;&gt;通过&lt;/span&gt;&lt;/span&gt;
+          &lt;span class=&quot;pill&quot;&gt;&lt;i class=&quot;dot&quot; style=&quot;background:var(--j-cond)&quot;&gt;&lt;/i&gt;&lt;b class=&quot;n&quot;&gt;2&lt;/b&gt;&lt;span class=&quot;lab&quot;&gt;带条件&lt;/span&gt;&lt;/span&gt;
+          &lt;span class=&quot;pill&quot;&gt;&lt;i class=&quot;dot&quot; style=&quot;background:var(--j-fail)&quot;&gt;&lt;/i&gt;&lt;b class=&quot;n&quot;&gt;1&lt;/b&gt;&lt;span class=&quot;lab&quot;&gt;不通过&lt;/span&gt;&lt;/span&gt;
+          &lt;span class=&quot;pill&quot;&gt;&lt;i class=&quot;dot&quot; style=&quot;background:var(--j-na)&quot;&gt;&lt;/i&gt;&lt;b class=&quot;n&quot;&gt;5&lt;/b&gt;&lt;span class=&quot;lab&quot;&gt;不适用&lt;/span&gt;&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;jc-card&quot;&gt;
+      &lt;div class=&quot;jc-head&quot;&gt;&lt;span class=&quot;jc-title&quot;&gt;复查判定&lt;/span&gt;&lt;span class=&quot;jc-total&quot;&gt;共 47 项&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;jc-body&quot;&gt;
+        &lt;div class=&quot;pl&quot; style=&quot;--pc:var(--brand)&quot;&gt;&lt;span class=&quot;pl-label&quot;&gt;完成率&lt;/span&gt;&lt;span class=&quot;pl-track&quot;&gt;&lt;i style=&quot;width:40%&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;span class=&quot;pl-pct&quot;&gt;40%&lt;/span&gt;&lt;/div&gt;
+        &lt;div class=&quot;pills&quot;&gt;
+          &lt;span class=&quot;pill&quot;&gt;&lt;i class=&quot;dot&quot; style=&quot;background:var(--j-pending-dot)&quot;&gt;&lt;/i&gt;&lt;b class=&quot;n&quot;&gt;28&lt;/b&gt;&lt;span class=&quot;lab&quot;&gt;待定&lt;/span&gt;&lt;/span&gt;
+          &lt;span class=&quot;pill&quot;&gt;&lt;i class=&quot;dot&quot; style=&quot;background:var(--j-pass)&quot;&gt;&lt;/i&gt;&lt;b class=&quot;n&quot;&gt;19&lt;/b&gt;&lt;span class=&quot;lab&quot;&gt;通过&lt;/span&gt;&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe></div>
+        <div class="card-foot"><a href="components/judge-summary-card/SPEC.md" target="_blank" rel="noopener">SPEC</a><a href="components/judge-summary-card/preview.html" target="_blank" rel="noopener">单独打开预览</a></div>
       </div>
-      <iframe class="prev" loading="lazy" style="height:420px" title="FullscreenEditCard preview" srcdoc="&lt;!doctype html&gt;
+      <div class="card card--wide" data-type="Pattern" data-text="fullscreeneditcard 全屏编辑卡片 fixed铺满+esc+锁滚动+复位吸顶的卡壳">
+        <div class="card-head">
+          <div class="titles"><span class="en">FullscreenEditCard</span><span class="cn">全屏编辑卡片</span><span class="tag tag-pat">Pattern</span></div>
+          <p class="use">fixed铺满+Esc+锁滚动+复位吸顶的卡壳</p>
+          <button class="zoom" type="button" title="放大预览">放大</button>
+        </div>
+        <div class="prev-wrap"><span class="sk"></span><iframe loading="lazy" style="height:440px" title="FullscreenEditCard preview" srcdoc="&lt;!doctype html&gt;
 &lt;html lang=&quot;zh-CN&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot; /&gt;
@@ -998,34 +941,58 @@
   &lt;/div&gt;&lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-"></iframe>
-      <div class="card-foot">
-        <a href="components/fullscreen-edit-card/SPEC.md" target="_blank" rel="noopener">SPEC</a>
-        <a href="components/fullscreen-edit-card/preview.html" target="_blank" rel="noopener">单独打开预览</a>
+"></iframe></div>
+        <div class="card-foot"><a href="components/fullscreen-edit-card/SPEC.md" target="_blank" rel="noopener">SPEC</a><a href="components/fullscreen-edit-card/preview.html" target="_blank" rel="noopener">单独打开预览</a></div>
+      </div>
       </div>
     </div>
   </div>
 </div>
+<div id="lb" class="lb"><div class="lb-box"><div class="lb-head"><span id="lb-title"></span><button id="lb-close" class="lb-x" title="关闭">×</button></div><iframe id="lb-iframe" title="放大预览"></iframe></div></div>
+<button id="totop" class="totop" title="回到顶部">&#8593;</button>
 <script>
-  (function(){
-    var q=document.getElementById('q'), grid=document.getElementById('grid'), count=document.getElementById('count');
-    var chips=[].slice.call(document.querySelectorAll('.chip')), cards=[].slice.call(document.querySelectorAll('.card'));
-    var filter='all';
-    function apply(){
-      var t=q.value.trim().toLowerCase(), n=0;
-      cards.forEach(function(c){
-        var okT=(filter==='all'||c.getAttribute('data-type')===filter);
-        var okQ=(!t||c.getAttribute('data-text').indexOf(t)>=0);
-        var show=okT&&okQ; c.classList.toggle('hide',!show); if(show){n++;}
-      });
-      count.textContent='显示 '+n+' / '+cards.length;
-    }
-    chips.forEach(function(ch){ch.addEventListener('click',function(){
-      chips.forEach(function(x){x.classList.remove('on');}); ch.classList.add('on'); filter=ch.getAttribute('data-f'); apply();
-    });});
-    q.addEventListener('input',apply);
-    apply();
-  })();
+(function(){
+  var q=document.getElementById('q'),clr=document.getElementById('sclr');
+  var chips=[].slice.call(document.querySelectorAll('.chip'));
+  var cards=[].slice.call(document.querySelectorAll('.card'));
+  var secs=[].slice.call(document.querySelectorAll('.section'));
+  var count=document.getElementById('count');
+  var type='all';
+  function apply(){
+    var t=(q.value||'').trim().toLowerCase(),n=0;
+    cards.forEach(function(c){
+      var okT=(type==='all'||c.getAttribute('data-type')===type);
+      var okQ=(!t||c.getAttribute('data-text').indexOf(t)>=0);
+      var show=okT&&okQ;c.classList.toggle('hide',!show);if(show)n++;
+    });
+    secs.forEach(function(s){s.classList.toggle('hide',!s.querySelector('.card:not(.hide)'));});
+    count.textContent='显示 '+n+' / '+cards.length;
+    clr.style.display=q.value?'block':'none';
+  }
+  chips.forEach(function(ch){ch.addEventListener('click',function(){
+    chips.forEach(function(x){x.classList.remove('on');});ch.classList.add('on');type=ch.getAttribute('data-f');apply();});});
+  q.addEventListener('input',apply);
+  clr.addEventListener('click',function(){q.value='';apply();q.focus();});
+  document.addEventListener('keydown',function(e){if(e.key==='/'&&document.activeElement!==q){e.preventDefault();q.focus();}});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLb();});
+  var lb=document.getElementById('lb'),lbf=document.getElementById('lb-iframe'),lbh=document.getElementById('lb-title');
+  function openLb(card){var ifr=card.querySelector('iframe');lbf.setAttribute('srcdoc',ifr.getAttribute('srcdoc'));
+    lbf.setAttribute('title',(card.querySelector('.en').textContent||'')+' 预览');lbh.textContent=card.querySelector('.en').textContent+' / '+card.querySelector('.cn').textContent;lb.classList.add('on');}
+  function closeLb(){lb.classList.remove('on');lbf.removeAttribute('srcdoc');}
+  [].slice.call(document.querySelectorAll('.card')).forEach(function(c){
+    c.querySelector('.zoom').addEventListener('click',function(){openLb(c);});
+    c.querySelector('.prev-wrap').addEventListener('dblclick',function(){openLb(c);});
+  });
+  lb.addEventListener('click',function(e){if(e.target===lb)closeLb();});
+  document.getElementById('lb-close').addEventListener('click',closeLb);
+  [].slice.call(document.querySelectorAll('.prev-wrap iframe')).forEach(function(f){
+    f.addEventListener('load',function(){var sk=f.parentElement.querySelector('.sk');if(sk)sk.remove();});
+  });
+  var tt=document.getElementById('totop');
+  window.addEventListener('scroll',function(){tt.classList.toggle('on',window.scrollY>480);});
+  tt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+  apply();
+})();
 </script>
 </body>
 </html>
