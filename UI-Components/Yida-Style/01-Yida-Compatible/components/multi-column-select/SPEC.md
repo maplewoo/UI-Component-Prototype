@@ -33,8 +33,8 @@ antd `Select` 的可复用变体：展开面板带一行表头，每个选项渲
 
 ## Visual Rules
 - 面板 `min-width: 950px`（**Default 按令牌**，design-tokens §4 默认值，可经 `panelMinWidth` 覆盖、默认必须 = 950）：防止窄容器下旧内核把 grid 列压塌。
-- 一级过滤器（选择项目）8 列默认宽 **`90/90/90/140/140/140/90/90`**（**Default 按令牌**：design-tokens §4 默认值，可经 `columns[].width` 覆盖）、+末列 `1fr` 吸收剩余、**8 列全部居中**（**MANDATORY**，design-tokens §4，无覆盖入口）。
-- 截断规则（**MANDATORY**，design-tokens §4）：主机厂最多 3 中文字（`maxChars:3` → `maxWidth 42px`）、总成类别最多 5 字（`maxChars:5` → `maxWidth 70px`），超出用 **`text-overflow:clip` 直接截断、不显省略号**；其余文本列可用 `ellipsis`。
+- 一级过滤器（选择项目）8 列默认宽 **`90/90/90/140/140/140/90/90`**（**Default 按令牌**：design-tokens §4 默认值，可经 `columns[].width` 覆盖）、+末列 `1fr` 吸收剩余、**8 列默认全部居中**（**Default 按令牌**：§4 默认 `align:center`，可经 `columns[].align` 覆盖）。
+- 截断规则（**Default 按令牌**：§4 默认主机厂 `maxChars:3`→42px、总成类别 `maxChars:5`→70px、`truncate:clip`，可经 `columns[].maxChars/.truncate` 覆盖）：超出用 `text-overflow:clip` 直接截断、不显省略号；其余文本列可用 `ellipsis`。
 - 覆盖 antd option 默认左右内距：`.mcs-panel .ant-select-item{padding-left:0;padding-right:0}`、`option-content{overflow:visible}`（MANDATORY：否则富单元格被裁切/错位）。
 - 迷你进度条高 **8px**（MANDATORY，design-tokens §4）：轨道 `#eef0f3`（`--track`），填充色由列 `progressColor` 决定且默认为令牌值（自查 `#19C355`=`--j-pass`、复查 `#1677ff`=`--brand`），右侧百分比同色（MANDATORY 数字与条同色）。
 - 冻结日期色阶（**MANDATORY 用令牌色**；阈值 `Default 按令牌`：默认 14/30 天，可经 `freezeThresholds` prop 覆盖）：无日期=灰底 `#eef0f3`（`--track`）+ 深字 `rgba(0,0,0,0.45)`（`--t3`）；到期（≤14 天）红 `#F44336`（`--j-fail`）；临期（≤30 天）琥珀 `#FFB300`（`--j-cond`）；其余蓝 `#1677ff`（`--brand`），字色 `#fff`（非令牌）。
@@ -63,8 +63,8 @@ props：
 
 ## Demo-Only Properties
 - 仅剩示例列的"内容"（列名与文案）、示例数据、示例收起宽度 340 可由 `columns`/`style` 改写。
-- 更正：主机厂 3 字(42px)/总成 5 字(70px) `text-overflow:clip` 截断、8 列全部居中——无覆盖入口，按 design-tokens §4 为 **MANDATORY**，不得页面级改动；`90/90/90/140/140/140/90/90` 列宽与容器 `min-width 950` 为 **Default 按令牌**（分别可经 `columns[].width`、`panelMinWidth` 覆盖，默认＝令牌值）。
-- 规范本体：表头与行共用 grid（+末列 `1fr`）+ §4 居中/clip 截断（固定）+ 列宽/min-width（`Default 按令牌`）+ 颜色一律 `var(--token, 兜底字面)`。
+- 更正：§4 的列宽 `90/90/90/140/140/140/90/90`、`min-width 950`、8 列居中(`align:center`)、主机厂 3 字/总成 5 字 clip(`maxChars`/`truncate:clip`) 一律为 **Default 按令牌**（分别可经 `columns[].width`、`panelMinWidth`、`columns[].align`、`columns[].maxChars/.truncate` 覆盖，默认＝令牌值）。真正无覆盖入口、保持 **MANDATORY** 的只有：表头与行共用同一 grid + 末列 `1fr`、hover/选中底 `--brand-bg`、搜索匹配用 `label` 文本、antd 内距覆盖、portal 内 `var()` 取色与 `popupClassName` 作用域。
+- 规范本体：表头与行共用 grid（+末列 `1fr`）+ §4 列宽/居中/clip/min-width（`Default 按令牌`）+ 颜色一律 `var(--token, 兜底字面)`。
 
 ## Migration Rules
 - 原页 `cs-dd-wrap / cs-dd-head / cs-dd-row / cs-dd-*` → 泛化为 `mcs-*` + `columns/options` 配置。
