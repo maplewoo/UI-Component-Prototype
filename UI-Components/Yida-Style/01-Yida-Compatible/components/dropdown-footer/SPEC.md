@@ -28,7 +28,7 @@
 - OptionCheck：`14x14`，圆角 `--r-small`（14/3 为定稿），边框 `--line-strong`（#d9d9d9），未选背景 `#fff`；选中背景/边框 `--brand`（#1677ff）、勾为白色（MANDATORY）。
 - DropdownFooter：`display:flex; justify-content:space-between; gap:8px; padding:6px 10px; border-top:1px solid var(--line,#f0f0f0); margin-top:4px; font-size:var(--f-aux,12px); color:var(--t3,rgba(0,0,0,.45))`（Default 按令牌；覆盖入口：`left`/`right`/`clearText`/`onClear`/`selectedCount`）。
 - 链接 `.df-link`：`color:var(--brand,#1677ff); cursor:pointer`（Default 按令牌；覆盖入口：`clearText`/`right`）。
-- OptionCount：`margin-left:auto; font-size:var(--f-aux,12px); color:var(--t3,rgba(0,0,0,.45)); font-variant-numeric:tabular-nums`（MANDATORY 右靠 + 等宽）；`count===0` 淡显 `color:var(--t4,rgba(0,0,0,.25))`（MANDATORY）。
+- OptionCount：`margin-left:auto; font-size:var(--f-aux,12px); color:var(--t3,rgba(0,0,0,.45)); font-variant-numeric:tabular-nums`（MANDATORY 右靠 + 等宽，无覆盖入口）；`count===0` 淡显 `color:var(--t4,rgba(0,0,0,.25))`（**Default 按令牌**：默认淡显，可经 `mutedAtZero:false` 关闭）。
 - 选中项底色 `var(--brand-bg,#e6f4ff)` + `font-weight:var(--fw-strong,600)`（MANDATORY，覆盖 antd 默认选中样式）。
 - 上述作用于 `popupClassName` 作用域（面板 portal 到 body）。
 
