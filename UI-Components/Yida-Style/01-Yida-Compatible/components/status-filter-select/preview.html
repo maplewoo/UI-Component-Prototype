@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>StatusFilterSelect 预览</title>
+<style>
+  :root{ --brand:#1677ff; --brand-bg:#e6f4ff; --line:#f0f0f0; --line-strong:#d9d9d9; --r-small:4px; --r-ctrl:6px;
+    --f-body:14px; --f-aux:12px; --t1:rgba(0,0,0,.88); --t3:rgba(0,0,0,.45); --t4:rgba(0,0,0,.25);
+    --j-pending-dot:#b0bec5; --j-pass:#19c355; --j-cond:#ffb300; --j-fail:#f44336; --j-na:#9e9e9e; }
+  body { margin: 0; padding: 32px; background: #f2f3f5;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; font-variant-numeric: tabular-nums; }
+  .cap { font-size: 12px; color: rgba(0,0,0,0.45); margin: 18px 0 8px; }
+  .lbl { font-size: var(--f-body); font-weight: 500; color: rgba(0,0,0,.65); margin-right: 6px; }
+  .box { display:inline-flex; align-items:center; gap:6px; flex-wrap:wrap; width:190px; min-height:32px; padding:2px 6px; border:1px solid var(--line-strong); border-radius:var(--r-ctrl); background:#fff; vertical-align:middle; }
+  .tag { display:inline-flex; align-items:center; gap:4px; height:22px; padding:0 6px; border-radius:var(--r-small); background:var(--line); color:var(--t1); font-size:var(--f-aux); }
+  .tag i { font-style:normal; color:var(--t4); cursor:pointer; }
+  .ph { color: var(--t4); font-size: var(--f-body); }
+
+  .panel { width: 210px; background:#fff; border-radius:8px; box-shadow:0 6px 16px rgba(16,24,40,.14); margin-top:8px; }
+  .opt { display:flex; align-items:center; gap:8px; min-height:32px; padding:5px 10px; font-size:var(--f-body); cursor:pointer; }
+  .opt:hover { background:#f5f7fa; }
+  .opt.sel { background:var(--brand-bg); font-weight:600; }
+  .chk { width:14px; height:14px; border-radius:var(--r-small); border:1px solid var(--line-strong); background:#fff; flex:0 0 auto; display:inline-flex; align-items:center; justify-content:center; }
+  .chk.on { background:var(--brand); border-color:var(--brand); }
+  .chk svg { width:10px; height:10px; }
+  .dot { width:8px; height:8px; border-radius:2px; flex:0 0 auto; }
+  .foot { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:6px 10px; border-top:1px solid var(--line); margin-top:4px; font-size:var(--f-aux); color:var(--t3); }
+  .link { color:var(--brand); cursor:pointer; }
+</style>
+</head>
+<body>
+  <p class="cap">收起：已选 tag（灰底可删）；展开：勾选框 + 状态色点 + 文字，选中项浅蓝底；底部"已选/清空"</p>
+  <span class="lbl">自查状态：</span>
+  <span class="box">
+    <span class="tag">通过<i>×</i></span>
+    <span class="tag">不通过<i>×</i></span>
+    <span class="ph">可多选</span>
+  </span>
+
+  <div class="panel">
+    <div class="opt"><span class="chk"></span><i class="dot" style="background:var(--j-pending-dot)"></i>待定</div>
+    <div class="opt sel"><span class="chk on"><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2"><path d="M2.5 6.5l2.5 2.5 4.5-5"/></svg></span><i class="dot" style="background:var(--j-pass)"></i>通过</div>
+    <div class="opt"><span class="chk"></span><i class="dot" style="background:var(--j-cond)"></i>带条件通过</div>
+    <div class="opt sel"><span class="chk on"><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2"><path d="M2.5 6.5l2.5 2.5 4.5-5"/></svg></span><i class="dot" style="background:var(--j-fail)"></i>不通过</div>
+    <div class="opt"><span class="chk"></span><i class="dot" style="background:var(--j-na)"></i>不适用</div>
+    <div class="foot"><span>已选 2 项</span><span class="link">清空</span></div>
+  </div>
+</body>
+</html>
