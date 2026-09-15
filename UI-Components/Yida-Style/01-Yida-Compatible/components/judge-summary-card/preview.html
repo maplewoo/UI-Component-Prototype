@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>JudgeSummaryCard 预览</title>
+<style>
+  :root{ --brand:#1677ff; --j-pending:#eceff1; --j-pending-dot:#b0bec5; --j-pass:#19c355; --j-cond:#ffb300; --j-fail:#f44336; --j-na:#9e9e9e;
+    --line:#f0f0f0; --head-bg:#fafbfc; --track:#eef0f3; --t1:rgba(0,0,0,.88); --t3:rgba(0,0,0,.45); --r-card:8px; }
+  body { margin: 0; padding: 32px; background: #f2f3f5;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; font-variant-numeric: tabular-nums; }
+  .grid { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  /* ==== card ==== */
+  .jc-card { flex: 1 1 420px; min-width: 360px; background: #fff; border: 1px solid var(--line); border-radius: var(--r-card); box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+  .jc-head { display: flex; align-items: center; justify-content: space-between; min-height: 40px; padding: 8px 16px; background: var(--head-bg); border-bottom: 1px solid var(--line); }
+  .jc-title { font-size: 16px; font-weight: 600; color: var(--t1); }
+  .jc-total { font-size: 12px; color: var(--t3); }
+  .jc-body { padding: 12px 16px; }
+  /* progress-line (C4) */
+  .pl { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .pl-label { font-size: 14px; color: var(--t1); }
+  .pl-track { position: relative; flex: 1 1 auto; height: 14px; border-radius: 99px; background: var(--track); overflow: hidden; }
+  .pl-track i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 99px; background: var(--pc, var(--j-pass)); }
+  .pl-pct { font-size: 20px; font-weight: 600; color: var(--pc, var(--j-pass)); min-width: 52px; text-align: right; }
+  /* status-pill row (C3) */
+  .pills { display: flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap; overflow-x: auto; }
+  .pill { display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border: 1px solid var(--line); border-radius: 13px; background: #fff; }
+  .pill .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .pill .n { font-weight: 600; color: var(--t1); }
+  .pill .lab { font-size: 12px; color: var(--t3); }
+</style>
+</head>
+<body>
+  <div class="grid">
+    <div class="jc-card">
+      <div class="jc-head"><span class="jc-title">自查判定</span><span class="jc-total">共 47 项</span></div>
+      <div class="jc-body">
+        <div class="pl" style="--pc:var(--j-pass)"><span class="pl-label">完成率</span><span class="pl-track"><i style="width:74%"></i></span><span class="pl-pct">74%</span></div>
+        <div class="pills">
+          <span class="pill"><i class="dot" style="background:var(--j-pending-dot)"></i><b class="n">5</b><span class="lab">待定</span></span>
+          <span class="pill"><i class="dot" style="background:var(--j-pass)"></i><b class="n">34</b><span class="lab">通过</span></span>
+          <span class="pill"><i class="dot" style="background:var(--j-cond)"></i><b class="n">2</b><span class="lab">带条件</span></span>
+          <span class="pill"><i class="dot" style="background:var(--j-fail)"></i><b class="n">1</b><span class="lab">不通过</span></span>
+          <span class="pill"><i class="dot" style="background:var(--j-na)"></i><b class="n">5</b><span class="lab">不适用</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="jc-card">
+      <div class="jc-head"><span class="jc-title">复查判定</span><span class="jc-total">共 47 项</span></div>
+      <div class="jc-body">
+        <div class="pl" style="--pc:var(--brand)"><span class="pl-label">完成率</span><span class="pl-track"><i style="width:40%"></i></span><span class="pl-pct">40%</span></div>
+        <div class="pills">
+          <span class="pill"><i class="dot" style="background:var(--j-pending-dot)"></i><b class="n">28</b><span class="lab">待定</span></span>
+          <span class="pill"><i class="dot" style="background:var(--j-pass)"></i><b class="n">19</b><span class="lab">通过</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
