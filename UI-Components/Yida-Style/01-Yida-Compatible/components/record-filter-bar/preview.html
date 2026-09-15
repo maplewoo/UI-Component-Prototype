@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RecordFilterBar 预览</title>
+<style>
+  :root{ --brand:#1677ff; --line:#f0f0f0; --t1:rgba(0,0,0,.88); --t2:rgba(0,0,0,.65); --t3:rgba(0,0,0,.45); --t4:rgba(0,0,0,.25); --r-ctrl:6px; }
+  body { margin: 0; padding: 32px; background: #f2f3f5; max-width: 1100px;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; font-variant-numeric: tabular-nums; }
+  .cap { font-size: 12px; color: rgba(0,0,0,0.45); margin: 18px 0 6px; }
+  .card { background:#fff; border:1px solid var(--line); border-radius:8px; padding:0 16px; }
+
+  /* ==== component ==== */
+  .rfb-row { display: grid; grid-template-columns: repeat(4, max-content) 1fr; column-gap: 24px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .rfb-item { display: flex; align-items: center; min-width: max-content; }
+  .rfb-label { font-size: 14px; font-weight: 500; color: var(--t2); white-space: nowrap; }
+  .rfb-select { width: 190px; min-width: 190px; margin-left: 6px; height: 32px; border: 1px solid #d9d9d9; border-radius: var(--r-ctrl); display: flex; align-items: center; gap: 4px; padding: 0 6px; background: #fff; font-size: 14px; color: var(--t1); flex-wrap: wrap; overflow: hidden; }
+  .rfb-select .ph { color: var(--t4); }
+  .chip { display: inline-flex; align-items: center; gap: 4px; height: 22px; padding: 0 6px; border-radius: 4px; background: #f0f0f0; color: var(--t1); font-size: 12px; }
+  .chip i { font-style: normal; color: var(--t4); cursor: pointer; }
+  .rfb-clear { grid-column: 5; justify-self: end; margin-right: 32px; }
+  .btn { height: 32px; padding: 0 15px; border: 1px solid var(--brand); background: var(--brand); color: #fff; border-radius: var(--r-ctrl); font-size: 14px; cursor: pointer; }
+  .btn[disabled] { background: #f5f5f5; border-color: #d9d9d9; color: var(--t4); cursor: not-allowed; }
+  .rfb-actions { display: flex; align-items: center; gap: 12px; padding: 0 0 12px; border-bottom: 1px solid var(--line); }
+  .rfb-cnt { display: inline-flex; align-items: center; justify-content: center; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: rgba(255,255,255,.28); color: #fff; font-size: 12px; font-weight: 500; margin-left: 6px; }
+</style>
+</head>
+<body>
+  <p class="cap">默认（各下拉空、清除禁用、批量禁用）</p>
+  <div class="card"><div class="rfb-row">
+    <div class="rfb-item"><span class="rfb-label">归属：</span><span class="rfb-select"><span class="ph">可多选</span></span></div>
+    <div class="rfb-item"><span class="rfb-label">自查状态：</span><span class="rfb-select"><span class="ph">可多选</span></span></div>
+    <div class="rfb-item"><span class="rfb-label">复查状态：</span><span class="rfb-select"><span class="ph">可多选</span></span></div>
+    <div class="rfb-item"><span class="rfb-label">检查内容关键词：</span><span class="rfb-select"><span class="ph">按回车添加</span></span></div>
+    <div class="rfb-clear"><button class="btn" disabled>清除筛选</button></div>
+  </div>
+  <div class="rfb-actions"><button class="btn" disabled>批量设为不适用<span class="rfb-cnt">0</span></button></div></div>
+
+  <p class="cap">已筛选（归属×2、关键词×2、清除可用、批量选中 5）</p>
+  <div class="card"><div class="rfb-row">
+    <div class="rfb-item"><span class="rfb-label">归属：</span><span class="rfb-select"><span class="chip">法规<i>×</i></span><span class="chip">标准<i>×</i></span></span></div>
+    <div class="rfb-item"><span class="rfb-label">自查状态：</span><span class="rfb-select"><span class="ph">可多选</span></span></div>
+    <div class="rfb-item"><span class="rfb-label">复查状态：</span><span class="rfb-select"><span class="ph">可多选</span></span></div>
+    <div class="rfb-item"><span class="rfb-label">检查内容关键词：</span><span class="rfb-select"><span class="chip">玻璃<i>×</i></span><span class="chip">间隙<i>×</i></span></span></div>
+    <div class="rfb-clear"><button class="btn">清除筛选</button></div>
+  </div>
+  <div class="rfb-actions"><button class="btn">批量设为不适用<span class="rfb-cnt">5</span></button></div></div>
+</body>
+</html>
